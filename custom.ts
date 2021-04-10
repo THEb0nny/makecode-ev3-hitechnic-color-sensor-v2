@@ -1,6 +1,6 @@
 namespace sensors {
 
-    class HiTechnicColorSensor extends sensors.internal.IICSensor {
+    export class HiTechnicColorSensor extends sensors.internal.IICSensor {
 
         _query() {
             this.poke()
