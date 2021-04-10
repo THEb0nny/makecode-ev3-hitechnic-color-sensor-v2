@@ -2,7 +2,6 @@ function Main() {
     TestRGBToHSVToColor(sensors.hitechnicColor1);
     while (true) {
         brick.clearScreen();
-        //let HT_ALL = sensors.hitechnicColor1.getAll();
         brick.showValue("Color", sensors.hitechnicColor1.getColor(), 2);
         brick.showValue("R", sensors.hitechnicColor1.getRGB()[0], 3);
         brick.showValue("G", sensors.hitechnicColor1.getRGB()[1], 4);
