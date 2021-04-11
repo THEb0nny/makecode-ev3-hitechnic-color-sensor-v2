@@ -6,7 +6,7 @@ let lColorSensorRgbMax: number[] = [0, 0, 0];
 let rColorSensorRgbMax: number[] = [0, 0, 0];
 
 // Перевод RGB в HSV
-function RgbToHsv(sensorColorRGB: number[], sensorColorW: number, sensorRgbMax: number[], debug: boolean = false): number[] {
+function RgbToHsv(sensorColorRGB: number[], sensorColorWhite: number, sensorRgbMax: number[], debug: boolean = false): number[] {
     if (!RGB_TO_HSV_FOR_HTCS) { // Нормализация значений, для hitechnic не требуется!
         const RGB_TO_HSV_MAX_RANGE = 255; // Диапазон 0 .. до MAX
         for (let i = 0; i < 3; i++) {
@@ -15,7 +15,7 @@ function RgbToHsv(sensorColorRGB: number[], sensorColorW: number, sensorRgbMax: 
             else if (sensorColorRGB[i] < 0) sensorColorRGB[i] = 0;
         }
     }
-    let W = (sensorColorW = -1 ? sensorColorRGB[0] + sensorColorRGB[1] + sensorColorRGB[2] : sensorColorW);
+    let W = sensorColorWhite; // Белый цвет от датчика
     if (debug) brick.showValue("W", W, 4);
     if (W > MIN_W) { // Фикс прыжков значений датчика, который направлен в пространство
         let max = Math.max(sensorColorRGB[0], Math.max(sensorColorRGB[1], sensorColorRGB[2]));
@@ -72,15 +72,11 @@ function SearchSensorRgbMax(colorSensor: sensors.HiTechnicColorSensor, sensorRgb
     return sensorRgbMax;
 }
 
-const enum colorSensorType {
-    HTCS = 0
-}
-
 // Тестирование перевода из RGB в HSV и получение цвета
 function TestRGBToHSVToColor(colorSensor: sensors.HiTechnicColorSensor, colorSensorRgbMax: number[]) {
     colorSensorRgbMax = SearchSensorRgbMax(colorSensor, lColorSensorRgbMax); // Найти максимальные значения
     while (true) {
-        let colorRgb = (RGB_TO_HSV_FOR_HTCS == true ? colorSensor.getRGB() : sensors.ColorSensor.rawRGB());
+        let colorRgb = colorSensor.getRGB();
         let colorWhite = (RGB_TO_HSV_FOR_HTCS == true? colorSensor.getWhite() : colorRgb[0] + colorRgb[1] + colorRgb[2]);
         brick.clearScreen();
         brick.showValue("R", colorRgb[0], 1); brick.showValue("G", colorRgb[1], 2); brick.showValue("B", colorRgb[2], 3); brick.showValue("W", colorWhite, 4);
