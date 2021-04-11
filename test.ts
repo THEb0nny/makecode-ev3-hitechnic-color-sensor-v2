@@ -1,20 +1,23 @@
+const RGB_TO_HSV_FOR_HTCS = true; 
+const MIN_W = 5; // Минимальный белый для фикса рандомных прыжков значений в RgbToHsv
+
 // Максимальные значения RGB (на белом цвете) для нормализации датчика определения цвета
 let lColorSensorRgbMax: number[] = [0, 0, 0];
 let rColorSensorRgbMax: number[] = [0, 0, 0];
 
 // Перевод RGB в HSV
-function RgbToHsv(sensorColorRGB: number[], sensorRgbMax: number[]): number[] {
-    const maxRange = 255;  // Диапазон от 0 .. maxRange
-    /*
-    for (let i = 0; i < 3; i++) { // Нормализация значений, для hitechnic не требуется!
-        sensorColorRGB[i] = Math.round((sensorColorRGB[i] / sensorRgbMax[i]) * maxRange);
-        if (sensorColorRGB[i] > maxRange) sensorColorRGB[i] = maxRange;
-        else if (sensorColorRGB[i] < 0) sensorColorRGB[i] = 0;
+function RgbToHsv(sensorColorRGB: number[], sensorColorW: number, sensorRgbMax: number[], debug: boolean = false): number[] {
+    if (!RGB_TO_HSV_FOR_HTCS) { // Нормализация значений, для hitechnic не требуется!
+        const RGB_TO_HSV_MAX_RANGE = 255; // Диапазон 0 .. до MAX
+        for (let i = 0; i < 3; i++) {
+            sensorColorRGB[i] = Math.round((sensorColorRGB[i] / sensorRgbMax[i]) * RGB_TO_HSV_MAX_RANGE);
+            if (sensorColorRGB[i] > RGB_TO_HSV_MAX_RANGE) sensorColorRGB[i] = RGB_TO_HSV_MAX_RANGE;
+            else if (sensorColorRGB[i] < 0) sensorColorRGB[i] = 0;
+        }
     }
-    */
-    let W = sensorColorRGB[0] + sensorColorRGB[1] + sensorColorRGB[2];
-    brick.showValue("W", W, 4);
-    if (W > 5) { // Фикс прыжков значений датчика, который направлен в пространство
+    let W = (sensorColorW = -1 ? sensorColorRGB[0] + sensorColorRGB[1] + sensorColorRGB[2] : sensorColorW);
+    if (debug) brick.showValue("W", W, 4);
+    if (W > MIN_W) { // Фикс прыжков значений датчика, который направлен в пространство
         let max = Math.max(sensorColorRGB[0], Math.max(sensorColorRGB[1], sensorColorRGB[2]));
         let min = Math.min(sensorColorRGB[0], Math.min(sensorColorRGB[1], sensorColorRGB[2]));
         let V = max, H = 0;
@@ -25,13 +28,13 @@ function RgbToHsv(sensorColorRGB: number[], sensorRgbMax: number[]): number[] {
             else H = Math.round(60 * (sensorColorRGB[1] - sensorColorRGB[2]) / (max - min) + 360);
         else if (max == sensorColorRGB[1]) H = Math.round(60 * (sensorColorRGB[2] - sensorColorRGB[0]) / (max - min) + 120);
         else H = Math.round(60 * (sensorColorRGB[0] - sensorColorRGB[1]) / (max - min) + 240);
-        brick.showValue("H", H, 5);
-        brick.showValue("S", S, 6);
-        brick.showValue("V", V, 7);
+        if (debug) {
+            brick.showValue("H", H, 5);
+            brick.showValue("S", S, 6);
+            brick.showValue("V", V, 7);
+        }
         return [H, S, V];
-    } else {
-        return [0, 0, 0];
-    }
+    } else return [0, 0, 0];
 }
 
 // Получить из HSV цветовой код
@@ -49,35 +52,39 @@ function HsvToColor(hsv: number[]): number {
     else return 0;
 }
 
-// Поиск максимальных значений RGB для конвертации, чтобы записать максимальные значения RGB
+// Поиск максимальных значений RGB для конвертации RGB в HSV, чтобы записать максимальные значения RGB
 function SearchSensorRgbMax(colorSensor: sensors.HiTechnicColorSensor, sensorRgbMax: number[]): number[] {
-    let rgbMax: number[] = sensorRgbMax;
     let btnPressed = 0;
     while (btnPressed < 2) {
         let colorRgb = colorSensor.getRGB();
         if (brick.buttonEnter.wasPressed()) { btnPressed++; pause(500); }
-        brick.clearScreen();
         if (btnPressed == 0) {
+            brick.clearScreen();
             brick.showValue("R", colorRgb[0], 1); brick.showValue("G", colorRgb[1], 2); brick.showValue("B", colorRgb[2], 3);
         } else if (btnPressed == 1) {
-            rgbMax[0] = Math.max(colorRgb[0], rgbMax[0]);
-            rgbMax[1] = Math.max(colorRgb[1], rgbMax[1]);
-            rgbMax[2] = Math.max(colorRgb[2], rgbMax[2]);
-            brick.showValue("R_max", rgbMax[0], 1); brick.showValue("G_max", rgbMax[1], 2); brick.showValue("B_max", rgbMax[2], 3);
+            sensorRgbMax[0] = Math.max(colorRgb[0], sensorRgbMax[0]);
+            sensorRgbMax[1] = Math.max(colorRgb[1], sensorRgbMax[1]);
+            sensorRgbMax[2] = Math.max(colorRgb[2], sensorRgbMax[2]);
+            brick.showValue("R_max", sensorRgbMax[0], 1); brick.showValue("G_max", sensorRgbMax[1], 2); brick.showValue("B_max", sensorRgbMax[2], 3);
         }
         pause(10);
     }
-    return rgbMax;
+    return sensorRgbMax;
+}
+
+const enum colorSensorType {
+    HTCS = 0
 }
 
 // Тестирование перевода из RGB в HSV и получение цвета
-function TestRGBToHSVToColor(colorSensor: sensors.HiTechnicColorSensor) {
-    lColorSensorRgbMax = SearchSensorRgbMax(colorSensor, lColorSensorRgbMax);
+function TestRGBToHSVToColor(colorSensor: sensors.HiTechnicColorSensor, colorSensorRgbMax: number[]) {
+    colorSensorRgbMax = SearchSensorRgbMax(colorSensor, lColorSensorRgbMax); // Найти максимальные значения
     while (true) {
-        let colorRgb = colorSensor.getRGB();
+        let colorRgb = (RGB_TO_HSV_FOR_HTCS == true ? colorSensor.getRGB() : sensors.ColorSensor.rawRGB());
+        let colorWhite = (RGB_TO_HSV_FOR_HTCS == true? colorSensor.getWhite() : colorRgb[0] + colorRgb[1] + colorRgb[2]);
         brick.clearScreen();
-        brick.showValue("R", colorRgb[0], 1); brick.showValue("G", colorRgb[1], 2); brick.showValue("B", colorRgb[2], 3); brick.showValue("W", colorRgb[0] + colorRgb[1] + colorRgb[2], 4);
-        let hsv = RgbToHsv(colorRgb, lColorSensorRgbMax);
+        brick.showValue("R", colorRgb[0], 1); brick.showValue("G", colorRgb[1], 2); brick.showValue("B", colorRgb[2], 3); brick.showValue("W", colorWhite, 4);
+        let hsv = RgbToHsv(colorRgb, colorWhite, colorSensorRgbMax, true);
         let currentColor = HsvToColor(hsv);
         brick.showValue("color", currentColor, 8);
         pause(10);
@@ -85,7 +92,8 @@ function TestRGBToHSVToColor(colorSensor: sensors.HiTechnicColorSensor) {
 }
 
 function Main() {
-    TestRGBToHSVToColor(sensors.hitechnicColor1);
+    TestRGBToHSVToColor(sensors.hitechnicColor1, lColorSensorRgbMax);
+    /*
     while (true) {
         brick.clearScreen();
         brick.showValue("Color", sensors.hitechnicColor1.getColor(), 2);
@@ -101,5 +109,7 @@ function Main() {
         brick.showValue("Raw", sensors.color2.reflectedLightRaw(), 14);
         loops.pause(50);
     }
+    */
 }
+
 Main();
