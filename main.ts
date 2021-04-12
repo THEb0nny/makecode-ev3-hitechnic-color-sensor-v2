@@ -5,7 +5,7 @@ namespace sensors {
         _query() {
             this.poke()
             this.transaction(1, [66], 5)
-            return 1
+            return 0
         }
 
         getColor() {
