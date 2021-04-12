@@ -11,7 +11,13 @@ namespace sensors {
         /**
          * TODO: Get color code from ht color sensor
          */
-        //% block
+        //% block="**ht color sensor** %this| color"
+        //% parts="colorsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=98
+        //% group="HT Color Sensor"
+        //% blockGap=8
         getColor() {
             return this.getBytes()[0]
         }
