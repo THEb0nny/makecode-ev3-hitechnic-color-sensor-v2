@@ -8,18 +8,34 @@ namespace sensors {
             return 0
         }
 
+        /**
+         * TODO: Get color code from ht color sensor
+         */
+        //% block
         getColor() {
             return this.getBytes()[0]
         }
 
+        /**
+         * TODO: Get array with RGB values ht color sensor
+         */
+        //% block
         getRGB() {
             return [this.getBytes()[1], this.getBytes()[2], this.getBytes()[3]]
         }
 
+        /**
+         * TODO: Get white from ht color sensor
+         */
+        //% block
         getWhite() {
             return this.getBytes()[4]
         }
 
+        /**
+         * TODO: Get all values from ht color sensor
+         */
+        //% block
         getAll() {
             return this.getBytes()
         }
