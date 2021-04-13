@@ -11,12 +11,7 @@ namespace sensors {
         /**
          * TODO: Get color code from ht color sensor
          */
-        //% block="on **ht color sensor** %this"
-        //% parts="colorsensor"
-        //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
-        //% weight=89 blockGap=12
-        //% group="Color Sensor"
+        //% block
         getColor() {
             return this.getBytes()[0]
         }
@@ -24,12 +19,7 @@ namespace sensors {
         /**
          * TODO: Get array with RGB values ht color sensor
          */
-        //% block="on **ht color sensor** %this"
-        //% parts="colorsensor"
-        //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
-        //% weight=89 blockGap=12
-        //% group="Color Sensor"
+        //% block
         getRGB() {
             return [this.getBytes()[1], this.getBytes()[2], this.getBytes()[3]]
         }
@@ -37,12 +27,7 @@ namespace sensors {
         /**
          * TODO: Get white from ht color sensor
          */
-        //% block="on **ht color sensor** %this"
-        //% parts="colorsensor"
-        //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
-        //% weight=89 blockGap=12
-        //% group="Color Sensor"
+        //% block
         getWhite() {
             return this.getBytes()[4]
         }
@@ -50,12 +35,7 @@ namespace sensors {
         /**
          * TODO: Get all values from ht color sensor
          */
-        //% block="on **ht color sensor** %this"
-        //% parts="colorsensor"
-        //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
-        //% weight=89 blockGap=12
-        //% group="Color Sensor"
+        //% block
         getAll() {
             return this.getBytes()
         }
