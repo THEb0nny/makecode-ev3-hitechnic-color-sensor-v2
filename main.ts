@@ -13,6 +13,8 @@ namespace sensors {
          */
         //% block
         //% blockNamespace = sensors
+        //% weight=89 blockGap=12
+        //% group="Color Sensor"
         getColor() {
             return this.getBytes()[0]
         }
@@ -22,6 +24,8 @@ namespace sensors {
          */
         //% block
         //% blockNamespace = sensors
+        //% weight=89 blockGap=12
+        //% group="Color Sensor"
         getRGB() {
             return [this.getBytes()[1], this.getBytes()[2], this.getBytes()[3]]
         }
@@ -31,6 +35,8 @@ namespace sensors {
          */
         //% block
         //% blockNamespace = sensors
+        //% weight=89 blockGap=12
+        //% group="Color Sensor"
         getWhite() {
             return this.getBytes()[4]
         }
@@ -40,6 +46,8 @@ namespace sensors {
          */
         //% block
         //% blockNamespace = sensors
+        //% weight=89 blockGap=12
+        //% group="Color Sensor"
         getAll() {
             return this.getBytes()
         }
