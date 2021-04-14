@@ -1,5 +1,5 @@
 {
-    "name": "ht-color-sensor-v2",
+    "name": "ht_color_sensor_v2",
     "version": "1.1.7",
     "description": "",
     "dependencies": {
@@ -15,5 +15,10 @@
     "supportedTargets": [
         "ev3"
     ],
-    "preferredEditor": "tsprj"
+    "preferredEditor": "tsprj",
+    "yotta": {
+        "config": {
+            "PXT_GC_CHECKS": 1
+        }
+    }
 }

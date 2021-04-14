@@ -6,7 +6,7 @@ function Main() {
         brick.showValue("G", sensors.hitechnicColor1.getRGB()[1], 4);
         brick.showValue("B", sensors.hitechnicColor1.getRGB()[2], 5);
         brick.showValue("W", sensors.hitechnicColor1.getWhite(), 6);
-        //brick.showValue("Raw", sensors.color2.reflectedLightRaw(), 14);
+        brick.showValue("Raw", sensors.color2.reflectedLightRaw(), 14);
         loops.pause(50);
     }
 }
