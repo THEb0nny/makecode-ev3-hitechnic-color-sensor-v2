@@ -18,7 +18,7 @@ namespace sensors {
         //% weight=100 blockGap=12
         //% subcategory="HiTechnic Sensors"
         //% group="Color Sensor V2"
-        getColor() {
+        getColor(): number {
             this.poke();
             return this.getBytes()[0];
         }
@@ -34,7 +34,7 @@ namespace sensors {
         //% weight=100 blockGap=12
         //% subcategory="HiTechnic Sensors"
         //% group="Color Sensor V2"
-        getRGB() {
+        getRGB(): number[] {
             this.poke();
             return [this.getBytes()[1], this.getBytes()[2], this.getBytes()[3]];
         }
@@ -50,7 +50,7 @@ namespace sensors {
         //% weight=100 blockGap=12
         //% subcategory="HiTechnic Sensors"
         //% group="Color Sensor V2"
-        getWhite() {
+        getWhite(): number {
             this.poke();
             return this.getBytes()[4];
         }
@@ -66,7 +66,7 @@ namespace sensors {
         //% weight=100 blockGap=12
         //% subcategory="HiTechnic Sensors"
         //% group="Color Sensor V2"
-        getAll() {
+        getAll(): number[] {
             this.poke();
             return this.getBytes();
         }
