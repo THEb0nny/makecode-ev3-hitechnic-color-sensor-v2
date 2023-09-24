@@ -3,7 +3,8 @@ namespace sensors {
     export class HiTechnicColorSensor extends sensors.internal.IICSensor {
 
         _query() {
-            return this.transaction(1, [66], 5);
+            this.transaction(1, [66], 5);
+            return 0;
         }
 
         /**
