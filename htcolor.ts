@@ -55,7 +55,7 @@ namespace sensors {
         }
 
         /**
-         * Get all values from HiTechnic Color Sensor v2.
+         * Get array with all values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
         //% blockId=HTColorSensorV2GetAll block="on **ht color sensor** $this|all"
