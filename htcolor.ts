@@ -27,7 +27,7 @@ namespace sensors {
          * Get array with RGB values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% blockId=HTColorSensorV2GetRGB block="on **ht color sensor** $this|rgb"
+        //% blockId=HTColorSensorV2GetRGB block="**ht color sensor** $this|rgb"
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
@@ -43,7 +43,7 @@ namespace sensors {
          * Get white from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% blockId=HTColorSensorV2GetWhite block="on **ht color sensor** $this|white"
+        //% blockId=HTColorSensorV2GetWhite block="**ht color sensor** $this|white"
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
@@ -59,7 +59,7 @@ namespace sensors {
          * Get array with all values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% blockId=HTColorSensorV2GetAll block="on **ht color sensor** $this|all"
+        //% blockId=HTColorSensorV2GetAll block="**ht color sensor** $this|all"
         //% parts="colorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
