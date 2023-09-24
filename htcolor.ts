@@ -11,8 +11,9 @@ namespace sensors {
          * Get color code from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% blockId=HTColorSensorV2GetColor block="**ht color sensor** $this|color"
-        //% parts="colorsensor"
+        //% block="**ht color sensor** $this|color"
+        //% blockId=HTColorSensorV2GetColor
+        //% parts="htcolorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
         //% weight=100 blockGap=12
@@ -27,11 +28,12 @@ namespace sensors {
          * Get array with RGB values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% blockId=HTColorSensorV2GetRGB block="**ht color sensor** $this|rgb"
-        //% parts="colorsensor"
+        //% block="**ht color sensor** $this|rgb"
+        //% blockId=HTColorSensorV2GetRGB
+        //% parts="htcolorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=100 blockGap=12
+        //% weight=98 blockGap=12
         //% subcategory="HiTechnic Sensors"
         //% group="Color Sensor V2"
         getRGB(): number[] {
@@ -43,11 +45,12 @@ namespace sensors {
          * Get white from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% blockId=HTColorSensorV2GetWhite block="**ht color sensor** $this|white"
-        //% parts="colorsensor"
+        //% block="**ht color sensor** $this|white"
+        //% blockId=HTColorSensorV2GetWhite
+        //% parts="htcolorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=100 blockGap=12
+        //% weight=97 blockGap=12
         //% subcategory="HiTechnic Sensors"
         //% group="Color Sensor V2"
         getWhite(): number {
@@ -59,11 +62,12 @@ namespace sensors {
          * Get array with all values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% blockId=HTColorSensorV2GetAll block="**ht color sensor** $this|all"
-        //% parts="colorsensor"
+        //% block="**ht color sensor** $this|all"
+        //% blockId=HTColorSensorV2GetAll
+        //% parts="htcolorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=100 blockGap=12
+        //% weight=99 blockGap=12
         //% subcategory="HiTechnic Sensors"
         //% group="Color Sensor V2"
         getAll(): number[] {
