@@ -1,24 +1,22 @@
 {
-    "name": "ht_color_sensor_v2",
-    "version": "1.1.9",
-    "description": "",
+    "name": "ht-color-sensor-v2",
+    "version": "1.2.0",
+    "description": "HiTechnic Color Sensor v2 support",
+    "license": "MIT",
     "dependencies": {
         "ev3": "*"
     },
     "files": [
-        "main.ts",
-        "README.md"
+        "README.md",
+        "htcolor.ts"
+        
     ],
     "testFiles": [
         "test.ts"
     ],
+    "public": true,
     "supportedTargets": [
         "ev3"
     ],
-    "preferredEditor": "tsprj",
-    "yotta": {
-        "config": {
-            "PXT_GC_CHECKS": 1
-        }
-    }
+    "preferredEditor": "tsprj"
 }
