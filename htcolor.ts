@@ -72,7 +72,8 @@ namespace sensors {
         //% group="Color Sensor V2"
         getAll(): number[] {
             this.poke();
-            return this.getBytes();
+            let arr = this.getBytes();
+            return arr;
         }
 
         _IICId() {
