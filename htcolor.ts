@@ -70,10 +70,9 @@ namespace sensors {
         //% weight=99 blockGap=12
         //% subcategory="HiTechnic Sensors"
         //% group="Color Sensor V2"
-        getAll(): number[] {
+        getAll() {
             this.poke();
-            let arr = this.getBytes();
-            return arr;
+            return this.getBytes();
         }
 
         _IICId() {
