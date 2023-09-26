@@ -131,6 +131,23 @@ namespace sensors {
             return this._query()[0];
         }
 
+        /**
+         * Set the sensor to the selected frequency to HiTechnic Color Sensor v2. The Sensor is configured by default for locations with 60Hz electrical supplies so if you live in a country with a 60Hz electrical supply no configuration is necessary.
+         * @param sensor the ht color sensor v2 port
+         * @param sensor the ht color sensor v2 frequency
+         */
+        //% block="**ht color sensor** $this|set $freq|Hz frequency"
+        //% blockId=HTColorSensorV2SetHz
+        //% parts="htcolorsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=89 blockGap=12
+        //% subcategory="HiTechnic"
+        //% blockHidden=true
+        setHz(freq: HTColorSensorV2Frequency) {
+            
+        }
+
         _IICId() {
             return 'HiTechncColorPD';
         }
