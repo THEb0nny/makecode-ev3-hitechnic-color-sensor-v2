@@ -2,7 +2,10 @@ const enum HTColorSensorV2Mode {
     All = 0,
     Color = 1,
     Rgb = 2,
-    White = 3
+    Rgbw = 3,
+    White = 4,
+    RawRgbw = 5,
+    PassiveRgbw = 6
 }
 
 const enum HTColorSensorV2Frequency {
@@ -13,7 +16,7 @@ const enum HTColorSensorV2Frequency {
 namespace sensors {
 
     /**
-    * The new and totally redesigned HiTechnic Color Sensor Version 2 (V2) operates by using a single white LED (light-emitting diode) to illuminate the target and analyses the color components of the light reflected by the target's surface and calculates a Color Number that is returned to the program.
+    * The new and totally redesigned HiTechnic Color Sensor Version 2 (V2) operates by using a single white LED (light-emitting diode) to illuminate the target and analyses the color components of the light reflected by the target's surface and calculates a Color Number that is returned.
     * NOTE: The Color Sensor V2 must be configured to match the mains electricity frequency for your country details on how to configure the Color Sensor V2 can be found in the configuration tab on this page.
     */
     //% fixedInstances
@@ -49,6 +52,8 @@ namespace sensors {
                 return [this.getBytes()[0]];
             } else if (this.mode == HTColorSensorV2Mode.Rgb) {
                 return [this.getBytes()[1], this.getBytes()[2], this.getBytes()[3]];
+            } else if (this.mode == HTColorSensorV2Mode.Rgbw) {
+                return [this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4]];
             } else if (this.mode == HTColorSensorV2Mode.White) {
                 return [this.getBytes()[4]];
             }
@@ -104,7 +109,7 @@ namespace sensors {
          * Get array with RGB values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% block="**ht color sensor** $this|rgb"
+        //% block="**ht color sensor** $this|RGB"
         //% blockId=HTColorSensorV2GetRGB
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
@@ -119,6 +124,24 @@ namespace sensors {
         }
 
         /**
+         * Get array with RGBW values from HiTechnic Color Sensor v2.
+         * @param sensor the ht color sensor v2 port
+         */
+        //% block="**ht color sensor** $this|RGBW"
+        //% blockId=HTColorSensorV2GetRGBW
+        //% parts="htcolorsensor"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=97 blockGap=12
+        //% subcategory="HiTechnic"
+        //% group="Color Sensor V2"
+        getRGBW(): number[] {
+            this.setMode(HTColorSensorV2Mode.Rgbw);
+            this.poke();
+            return this._query();
+        }
+
+        /**
          * Get white from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
@@ -127,7 +150,7 @@ namespace sensors {
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=97
+        //% weight=96
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getWhite(): number {
@@ -140,12 +163,12 @@ namespace sensors {
          * Get array with HSVL values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% block="**ht color sensor** $this|hsvl"
+        //% block="**ht color sensor** $this|HSVL"
         //% blockId=HTColorSensorV2GetHSVL
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
         //% this.fieldEditor="ports"
-        //% weight=96
+        //% weight=95
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getHSVL(): number[] {
@@ -159,44 +182,40 @@ namespace sensors {
             // Color sensor V2 RGB Maxmium is 255
             let hue = 0, sat = 0, val = 0;
             
-            let max = Math.max(r, g);
-            max = Math.max(max, b);
-            let min = Math.min(r, g);
-            min = Math.min(min, b);
+            let max = Math.max(Math.max(r, g), b);
+            let min = Math.min(Math.min(r, g), b);
             let light = (max + min) / 5.12;
             val = max / 2.56;
-            if (val == 0) {
+            if (val == 0) { // It's black, there's no way to tell hue and sat
                 hue = -1;
                 sat = -1;
             }
+            
+            if (hue != -1 && sat != -1) {
+                r = r / max;
+                g = g / max;
+                b = b / max;
+                max = Math.max(Math.max(r, g), b);
+                min = Math.min(Math.min(r, g), b);
+                sat = (max - min) * 100;
+                if (sat == 0) hue = -1;
 
-            r = r / max;
-            g = g / max;
-            b = b / max;
-            max = Math.max(r, g);
-            max = Math.max(max, b);
-            min = Math.min(r, g);
-            min = Math.min(min, b);
-            sat = (max - min) * 100;
-            if (sat == 0) hue = -1;
+                if (hue != -1) { // It's white, there's no way to tell hue
+                    r = (r - min) / (max - min);
+                    g = (g - min) / (max - min);
+                    b = (b - min) / (max - min);
+                    max = Math.max(r, g);
+                    max = Math.max(max, b);
+                    min = Math.min(r, g);
+                    min = Math.min(min, b);
 
-            r = (r - min) / (max - min);
-            g = (g - min) / (max - min);
-            b = (b - min) / (max - min);
-            max = Math.max(r, g);
-            max = Math.max(max, b);
-            min = Math.min(r, g);
-            min = Math.min(min, b);
-
-            if (max == r) {
-                hue = 0 + 60 + (g - b);
-                if (hue < 0) hue += 360;
-            } else if (max == g) {
-                hue = 120 + 60 * (b - r);
-            } else {
-                hue = 240 + 60 * (r - g);
+                    if (max == r) {
+                        hue = 0 + 60 * (g - b);
+                        if (hue < 0) hue += 360;
+                    } else if (max == g) hue = 120 + 60 * (b - r);
+                    else hue = 240 + 60 * (r - g);
+                }
             }
-
             return [Math.round(hue), Math.round(sat), Math.round(val), Math.round(light)];
         }
 
