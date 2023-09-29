@@ -21,6 +21,8 @@ const enum HTCS2FreqMode {
 
 namespace sensors {
 
+    const MODE_SWITCH_DELAY = 100;
+
     /**
     * The new and totally redesigned HiTechnic Color Sensor V2 operates by using a single white LED to illuminate the target and analyses the color components of the light reflected by the target's surface and calculates a Color Number that is returned.
     * NOTE: The Color Sensor V2 must be configured to match the mains electricity frequency for your country details on how to configure the Color Sensor V2 can be found in the configuration tab on this page.
@@ -34,7 +36,6 @@ namespace sensors {
         }
         
         setMode(m: HTCS2SoftMode) {
-            //this.transaction(1, [65, m], 0);
             this._setMode(m);
         }
 
@@ -51,7 +52,7 @@ namespace sensors {
                 } else if (m == HTCS2SoftMode.RawRgbw) {
                     this.transaction(1, [65, HTCS2Mode.Raw], 0);
                 }
-                //setIICMode(this._port, this._deviceType(), v);
+                pause(MODE_SWITCH_DELAY);
             }
         }
 
@@ -263,9 +264,9 @@ namespace sensors {
         //% weight=89 blockGap=12
         //% subcategory="HiTechnic"
         setHz(freq: HTCS2FreqMode) {
-            //blockHidden=true
             // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
             this.transaction(1, [65, freq], 0);
+            pause(MODE_SWITCH_DELAY);
         }
 
         _IICId() {
