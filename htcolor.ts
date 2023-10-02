@@ -269,6 +269,10 @@ namespace sensors {
             pause(MODE_SWITCH_DELAY);
         }
 
+        _deviceType() {
+            return DAL.DEVICE_TYPE_NXT_IIC;
+        }
+
         _IICId() {
             return 'HiTechncColorPD';
         }
