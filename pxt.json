@@ -1,6 +1,6 @@
 {
     "name": "ht-color-sensor-v2",
-    "version": "1.4.5",
+    "version": "1.4.6",
     "description": "HiTechnic Color Sensor v2 support - beta",
     "license": "MIT",
     "dependencies": {
@@ -8,7 +8,8 @@
     },
     "files": [
         "README.md",
-        "htcolor.ts"
+        "htcolor.ts",
+        "docs/reference/sensors/ht-color-sensor-v2.md"
     ],
     "testFiles": [
         "test.ts"
@@ -17,5 +18,6 @@
     "supportedTargets": [
         "ev3"
     ],
-    "preferredEditor": "tsprj"
+    "preferredEditor": "tsprj",
+    "icon": "icon.png"
 }
