@@ -10,7 +10,7 @@
         "README.md",
         "htcolor.ts",
         "docs/ht-color-sensor-v2.md",
-        "docs/ht-color-sensor-v2/all.md"
+        "docs/all.md"
     ],
     "testFiles": [
         "test.ts"
