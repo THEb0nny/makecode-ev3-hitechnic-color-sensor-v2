@@ -83,6 +83,7 @@ namespace sensors {
          * Get software mode to HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
+        //% help=sensors/ht-color-sensor-v2/mode
         //% block="**ht color sensor** $this|get mode"
         //% blockId=HTCS2GetMode
         //% parts="htcolorsensor"
@@ -99,6 +100,7 @@ namespace sensors {
          * Get array with color, red, green, blue, white values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
+        //% help=sensors/ht-color-sensor-v2/all
         //% block="**ht color sensor** $this|all"
         //% blockId=HTCS2GetAll
         //% parts="htcolorsensor"
@@ -117,6 +119,7 @@ namespace sensors {
          * Get color code from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
+        //% help=sensors/ht-color-sensor-v2/color
         //% block="**ht color sensor** $this|color"
         //% blockId=HTCS2GetColor
         //% parts="htcolorsensor"
@@ -135,6 +138,7 @@ namespace sensors {
          * Get array with RGBW values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
+        //% help=sensors/ht-color-sensor-v2/rgbw
         //% block="**ht color sensor** $this|RGBW"
         //% blockId=HTCS2GetRGBW
         //% parts="htcolorsensor"
@@ -153,6 +157,7 @@ namespace sensors {
          * Get array with RGBW values from HiTechnic Color Sensor v2 when the backlight is off.
          * @param sensor the ht color sensor v2 port
          */
+        //% help=sensors/ht-color-sensor-v2/passive-rgbw
         //% block="**ht color sensor** $this|RGBW at passive"
         //% blockId=HTCS2GetPassiveRGBW
         //% parts="htcolorsensor"
@@ -174,6 +179,7 @@ namespace sensors {
          * Get array with raw RGBW values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
+        //% help=sensors/ht-color-sensor-v2/raw-rgbw
         //% block="**ht color sensor** $this|raw RGBW"
         //% blockId=HTCS2GetRawRGBW
         //% parts="htcolorsensor"
@@ -195,6 +201,7 @@ namespace sensors {
          * Get array with HSVL values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
+        //% help=sensors/ht-color-sensor-v2/hsvl
         //% block="**ht color sensor** $this|HSVL"
         //% blockId=HTCS2GetHSVL
         //% parts="htcolorsensor"
@@ -256,6 +263,7 @@ namespace sensors {
          * @param sensor the ht color sensor v2 port
          * @param sensor the ht color sensor v2 frequency
          */
+        //% help=sensors/ht-color-sensor-v2/frequency
         //% block="**ht color sensor** $this|set $freq|(Hz) frequency"
         //% blockId=HTCS2SetHz
         //% parts="htcolorsensor"
