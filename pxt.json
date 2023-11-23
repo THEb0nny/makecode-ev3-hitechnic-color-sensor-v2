@@ -4,7 +4,8 @@
     "description": "HiTechnic Color Sensor v2 support - beta",
     "license": "MIT",
     "dependencies": {
-        "ev3": "*"
+        "ev3": "*",
+        "builder": "*"
     },
     "files": [
         "README.md",
