@@ -100,7 +100,7 @@ namespace sensors {
          * Get array with color, red, green, blue, white values from HiTechnic Color Sensor v2.
          * @param sensor the ht color sensor v2 port
          */
-        //% help=sensors/ht-color-sensor-v2/all
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/reference/sensors/ht-color-sensor-v2/all
         //% block="**ht color sensor** $this|all"
         //% blockId=HTCS2GetAll
         //% parts="htcolorsensor"
