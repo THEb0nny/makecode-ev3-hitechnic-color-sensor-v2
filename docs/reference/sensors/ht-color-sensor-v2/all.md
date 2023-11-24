@@ -1,4 +1,4 @@
-# all values
+# All values
 
 Get all values from the sensor: color, r, g, b, white.
 
@@ -30,4 +30,4 @@ forever(function () {
 
 ## See also
 
-[reflected light](/reference/sensors/color-sensor/reflected-light)
+[color](/reference/sensors/ht-color-sensor-v2/color)

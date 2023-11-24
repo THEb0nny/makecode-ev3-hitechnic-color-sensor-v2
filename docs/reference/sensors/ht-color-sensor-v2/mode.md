@@ -1,4 +1,4 @@
-# all values
+# Mode
 
 Get current mode.
 

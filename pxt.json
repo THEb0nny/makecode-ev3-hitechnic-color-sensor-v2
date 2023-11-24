@@ -9,9 +9,10 @@
     "files": [
         "README.md",
         "htcolor.ts",
-        "docs/ht-color-sensor-v2.md",
-        "docs/all.md",
-        "docs/mode.md"
+        "docs/reference/sensors/ht-color-sensor-v2.md",
+        "docs/reference/sensors/ht-color-sensor-v2/all.md",
+        "docs/reference/sensors/ht-color-sensor-v2/mode.md",
+        "docs/reference/sensors/ht-color-sensor-v2/color.md"
     ],
     "testFiles": [
         "test.ts"

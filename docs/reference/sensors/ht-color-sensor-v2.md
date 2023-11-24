@@ -13,11 +13,11 @@ sensors.htColor1.setHz(HTCS2FreqMode.Freq60)
 
 ## See slso
 
-[all](/reference/sensors/ht-color-sensor-v2/all),
+[all](/docs/reference/sensors/ht-color-sensor-v2/all),
 [color](/reference/sensors/ht-color-sensor-v2/color),
 [rgbw](/reference/sensors/ht-color-sensor-v2/color),
 [raw rgbw](/reference/sensors/ht-color-sensor-v2/raw-rgb),
 [passive rgbw](/reference/sensors/ht-color-sensor-v2/passive-rgb),
 [hsvl](/reference/sensors/ht-color-sensor-v2/hsvl),
 [hz](/reference/sensors/ht-color-sensor-v2/frequency),
-[mode](/reference/sensors/ht-color-sensor-v2/mode)
+[mode](/docs/reference/sensors/ht-color-sensor-v2/mode)
