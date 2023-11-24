@@ -6,7 +6,7 @@ Get raw values from the sensor: r, g, b, white.
 sensors.htColor1.getRawRGBW()
 ```
 
-The return raw value is an array with the values red, green, blue, white. The color components red, green, blue give values from 0 to 255. They are already normalized. White gives a white reflectance value also from 0 to 255.
+The return raw value is an array with the values red, green, blue, white. The color components red, green, blue give values from.
 
 ## Returns
 

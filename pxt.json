@@ -1,6 +1,6 @@
 {
     "name": "ht-color-sensor-v2",
-    "version": "1.5.7",
+    "version": "1.5.8",
     "description": "HiTechnic Color Sensor v2 support - beta",
     "license": "MIT",
     "dependencies": {
