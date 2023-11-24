@@ -261,7 +261,7 @@ namespace sensors {
         /**
          * Set the sensor to the selected frequency to HiTechnic Color Sensor v2. The Sensor is configured by default for locations with 60Hz electrical supplies.
          * @param sensor the ht color sensor v2 port
-         * @param sensor the ht color sensor v2 frequency
+         * @param freq the ht color sensor v2 frequency
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/frequency
         //% block="**ht color sensor** $this|set $freq|(Hz) frequency"

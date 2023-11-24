@@ -20,3 +20,8 @@ The display shows the `number` of the sensor operating mode.
 brick.clearScreen();
 brick.showValue("Mode", sensors.htColor1.getMode(), 1);
 ```
+
+## See also
+
+[frequency](/reference/sensors/ht-color-sensor-v2/frequency),
+[mode](/docs/reference/sensors/ht-color-sensor-v2/mode)
