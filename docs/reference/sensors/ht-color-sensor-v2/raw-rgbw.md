@@ -1,4 +1,4 @@
-# RGBW raw value
+# RGBW RAW value
 
 Get raw values from the sensor: r, g, b, white.
 
@@ -29,6 +29,6 @@ forever(function () {
 
 ## See slso
 
-[all](/docs/reference/sensors/ht-color-sensor-v2/all),
+[all](/reference/sensors/ht-color-sensor-v2/all),
 [rgbw](/reference/sensors/ht-color-sensor-v2/color),
 [passive rgbw](/reference/sensors/ht-color-sensor-v2/passive-rgbw)

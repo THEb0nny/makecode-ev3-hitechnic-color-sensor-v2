@@ -29,6 +29,6 @@ forever(function () {
 
 ## See also
 
-[all](/docs/reference/sensors/ht-color-sensor-v2/all),
+[all](/reference/sensors/ht-color-sensor-v2/all),
 [rgbw](/reference/sensors/ht-color-sensor-v2/color),
 [raw rgbw](/reference/sensors/ht-color-sensor-v2/raw-rgbw)

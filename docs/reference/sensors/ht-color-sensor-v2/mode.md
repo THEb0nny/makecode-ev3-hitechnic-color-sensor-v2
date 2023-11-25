@@ -24,4 +24,4 @@ brick.showValue("Mode", sensors.htColor1.getMode(), 1);
 ## See also
 
 [frequency](/reference/sensors/ht-color-sensor-v2/frequency),
-[mode](/docs/reference/sensors/ht-color-sensor-v2/mode)
+[mode](/reference/sensors/ht-color-sensor-v2/mode)

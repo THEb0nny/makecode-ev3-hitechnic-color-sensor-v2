@@ -18,4 +18,4 @@ sensors.htColor1.setHz(HTCS2FreqMode.Freq50)
 
 ## See also
 
-[mode](/docs/reference/sensors/ht-color-sensor-v2/mode)
+[mode](/reference/sensors/ht-color-sensor-v2/mode)
