@@ -30,8 +30,8 @@ forever(function () {
 
 ## See also
 
-[all](/reference/sensors/ht-color-sensor-v2/all),
-[color](/reference/sensors/ht-color-sensor-v2/color),
-[rgbw](/reference/sensors/ht-color-sensor-v2/color),
-[raw rgbw](/reference/sensors/ht-color-sensor-v2/raw-rgbw),
-[passive rgbw](/reference/sensors/ht-color-sensor-v2/passive-rgbw)
+[all](/docs/reference/sensors/ht-color-sensor-v2/all),
+[color](/docs/reference/sensors/ht-color-sensor-v2/color),
+[rgbw](/docs/reference/sensors/ht-color-sensor-v2/color),
+[raw rgbw](/docs/reference/sensors/ht-color-sensor-v2/raw-rgbw),
+[passive rgbw](/docs/reference/sensors/ht-color-sensor-v2/passive-rgbw)
