@@ -1,6 +1,6 @@
 {
-    "name": "makecode-ht-color-sensor-v2",
-    "version": "1.6.5",
+    "name": "ht-color-sensor-v2",
+    "version": "1.6.6",
     "description": "HiTechnic Color Sensor v2 support - beta",
     "license": "MIT",
     "dependencies": {
@@ -9,14 +9,14 @@
     "files": [
         "README.md",
         "htcolor.ts",
-        "docs/reference/sensors/ht-color-sensor-v2.md",
-        "docs/reference/sensors/ht-color-sensor-v2/all.md",
-        "docs/reference/sensors/ht-color-sensor-v2/rgbw.md",
-        "docs/reference/sensors/ht-color-sensor-v2/raw-rgbw.md",
-        "docs/reference/sensors/ht-color-sensor-v2/passive-rgbw.md",
-        "docs/reference/sensors/ht-color-sensor-v2/mode.md",
-        "docs/reference/sensors/ht-color-sensor-v2/color.md",
-        "docs/reference/sensors/ht-color-sensor-v2/hsvl.md"
+        "docs/ht-color-sensor-v2.md",
+        "docs/all.md",
+        "docs/rgbw.md",
+        "docs/raw-rgbw.md",
+        "docs/passive-rgbw.md",
+        "docs/mode.md",
+        "docs/color.md",
+        "docs/hsvl.md"
     ],
     "testFiles": [
         "test.ts"
