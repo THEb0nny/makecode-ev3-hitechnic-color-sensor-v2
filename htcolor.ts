@@ -271,6 +271,7 @@ namespace sensors {
         //% this.fieldEditor="ports"
         //% weight=89 blockGap=12
         //% subcategory="HiTechnic"
+        //% group="Color Sensor V2"
         setHz(freq: HTCS2FreqMode) {
             // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
             this.transaction(1, [65, freq], 0);
