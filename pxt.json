@@ -9,14 +9,14 @@
     "files": [
         "README.md",
         "htcolor.ts",
-        "/reference/sensors/ht-color-sensor-v2.md",
-        "/reference/sensors/ht-color-sensor-v2/all.md",
-        "/reference/sensors/ht-color-sensor-v2/rgbw.md",
-        "/reference/sensors/ht-color-sensor-v2/raw-rgbw.md",
-        "/reference/sensors/ht-color-sensor-v2/passive-rgbw.md",
-        "/reference/sensors/ht-color-sensor-v2/mode.md",
-        "/reference/sensors/ht-color-sensor-v2/color.md",
-        "/reference/sensors/ht-color-sensor-v2/hsvl.md"
+        "docs/reference/sensors/ht-color-sensor-v2.md",
+        "docs/reference/sensors/ht-color-sensor-v2/all.md",
+        "docs/reference/sensors/ht-color-sensor-v2/rgbw.md",
+        "docs/reference/sensors/ht-color-sensor-v2/raw-rgbw.md",
+        "docs/reference/sensors/ht-color-sensor-v2/passive-rgbw.md",
+        "docs/reference/sensors/ht-color-sensor-v2/mode.md",
+        "docs/reference/sensors/ht-color-sensor-v2/color.md",
+        "docs/reference/sensors/ht-color-sensor-v2/hsvl.md"
     ],
     "testFiles": [
         "test.ts"
