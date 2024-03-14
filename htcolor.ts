@@ -85,6 +85,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/mode
         //% block="**ht color sensor** $this|get mode"
+        //% block.loc.ru="**ht датчик цвета** $this|режим"
         //% blockId=HTCS2GetMode
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
@@ -102,6 +103,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/all
         //% block="**ht color sensor** $this|all"
+        //% block.loc.ru="**ht датчик цвета** $this|все значения"
         //% blockId=HTCS2GetAll
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
@@ -121,6 +123,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/color
         //% block="**ht color sensor** $this|color"
+        //% block.loc.ru="**ht датчик цвета** $this|цвет"
         //% blockId=HTCS2GetColor
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
@@ -140,6 +143,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/rgbw
         //% block="**ht color sensor** $this|RGBW"
+        //% block.loc.ru="**ht датчик цвета** $this|RGBW"
         //% blockId=HTCS2GetRGBW
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
@@ -159,6 +163,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/passive-rgbw
         //% block="**ht color sensor** $this|RGBW at passive"
+        //% block.loc.ru="**ht датчик цвета** $this|RGBW с выключеной подсветкой"
         //% blockId=HTCS2GetPassiveRGBW
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
@@ -181,6 +186,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/raw-rgbw
         //% block="**ht color sensor** $this|raw RGBW"
+        //% block.loc.ru="**ht датчик цвета** $this|сырые RGBW"
         //% blockId=HTCS2GetRawRGBW
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
@@ -203,6 +209,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/hsvl
         //% block="**ht color sensor** $this|HSVL"
+        //% block.loc.ru="**ht датчик цвета** $this|HSVL"
         //% blockId=HTCS2GetHSVL
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
@@ -265,6 +272,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/frequency
         //% block="**ht color sensor** $this|set $freq|(Hz) frequency"
+        //% block.loc.ru="**ht датчик цвета** $this|установить частоту $freq|(Гц)"
         //% blockId=HTCS2SetHz
         //% parts="htcolorsensor"
         //% blockNamespace=sensors
