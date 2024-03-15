@@ -28,7 +28,7 @@ namespace sensors {
     * NOTE: The Color Sensor V2 must be configured to match the mains electricity frequency for your country details on how to configure the Color Sensor V2 can be found in the configuration tab on this page.
     */
     //% fixedInstances
-    export class HiTechnicColorSensor extends sensors.internal.IICSensor {
+    export class HiTechnicColorSensor2 extends sensors.internal.IICSensor {
 
         constructor(port: number) {
             super(port);
@@ -306,14 +306,14 @@ namespace sensors {
     }
 
     //% whenUsed block="1" weight=95 fixedInstance jres=icons.port1
-    export const htColor1 = new HiTechnicColorSensor(1);
+    export const htColor1 = new HiTechnicColorSensor2(1);
 
     //% whenUsed block="2" weight=90 fixedInstance jres=icons.port2
-    export const htColor2 = new HiTechnicColorSensor(2);
+    export const htColor2 = new HiTechnicColorSensor2(2);
 
     //% whenUsed block="3" weight=90 fixedInstance jres=icons.port3
-    export const htColor3 = new HiTechnicColorSensor(3);
+    export const htColor3 = new HiTechnicColorSensor2(3);
     
     //% whenUsed block="4" weight=90 fixedInstance jres=icons.port4
-    export const htColor4 = new HiTechnicColorSensor(4);
+    export const htColor4 = new HiTechnicColorSensor2(4);
 }
