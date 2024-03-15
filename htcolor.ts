@@ -218,6 +218,7 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getHSVL(): number[] {
+            // https://github.com/botbench/robotcdriversuite/blob/master/include/common-light.h
             // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
             this.setMode(HTCS2SoftMode.Rgbw);
             this.poke();
@@ -226,40 +227,49 @@ namespace sensors {
 
             // https://clev3r.ru/codesamples/
             // Color sensor V2 RGB Maxmium is 255
-            let hue = 0, sat = 0, val = 0;
+            let hue = 0, sat = 0, val = 0, light = 0;
 
-            let max = Math.max(Math.max(r, g), b);
-            let min = Math.min(Math.min(r, g), b);
-            let light = (max + min) / 5.12;
-            val = max / 2.56;
-            if (val == 0) { // It's black, there's no way to tell hue and sat
+            let rgb_max = Math.max(Math.max(r, g), b);
+            let rgb_min = Math.min(Math.min(r, g), b);
+
+            light = (rgb_max + rgb_min) / 5.12;
+            val = rgb_max / 2.56;
+
+            if (val == 0) { // It's black, there's no way to tell hue and sat // val == 0 || rgb_max == 0
                 hue = -1;
                 sat = -1;
             }
 
             if (hue != -1 && sat != -1) {
-                r = r / max;
-                g = g / max;
-                b = b / max;
-                max = Math.max(Math.max(r, g), b);
-                min = Math.min(Math.min(r, g), b);
-                sat = (max - min) * 100;
-                if (sat == 0) hue = -1;
+                r = r / rgb_max;
+                g = g / rgb_max;
+                b = b / rgb_max;
+
+                rgb_max = Math.max(Math.max(r, g), b);
+                rgb_min = Math.min(Math.min(r, g), b);
+
+                sat = (rgb_max - rgb_min) * 100;
+                
+                if (sat == 0) {
+                    hue = -1;
+                }
 
                 if (hue != -1) { // It's white, there's no way to tell hue
-                    r = (r - min) / (max - min);
-                    g = (g - min) / (max - min);
-                    b = (b - min) / (max - min);
-                    max = Math.max(r, g);
-                    max = Math.max(max, b);
-                    min = Math.min(r, g);
-                    min = Math.min(min, b);
+                    r = (r - rgb_min) / (rgb_max - rgb_min);
+                    g = (g - rgb_min) / (rgb_max - rgb_min);
+                    b = (b - rgb_min) / (rgb_max - rgb_min);
 
-                    if (max == r) {
+                    rgb_max = Math.max(Math.max(r, g), b);
+                    rgb_min = Math.min(Math.min(r, g), b);
+
+                    if (rgb_max == r) {
                         hue = 0 + 60 * (g - b);
                         if (hue < 0) hue += 360;
-                    } else if (max == g) hue = 120 + 60 * (b - r);
-                    else hue = 240 + 60 * (r - g);
+                    } else if (rgb_max == g) {
+                        hue = 120 + 60 * (b - r);
+                    } else {
+                        hue = 240 + 60 * (r - g);
+                    }
                 }
             }
             return [Math.round(hue), Math.round(sat), Math.round(val), Math.round(light)];
