@@ -34,6 +34,10 @@ namespace sensors {
             super(port);
             this.setMode(HTCS2SoftMode.All);
         }
+
+        _deviceType() {
+            return DAL.DEVICE_TYPE_NXT_IIC;
+        }
         
         setMode(m: HTCS2SoftMode) {
             this._setMode(m);
@@ -294,10 +298,6 @@ namespace sensors {
             // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
             this.transaction(1, [65, freq], 0);
             pause(MODE_SWITCH_DELAY);
-        }
-
-        _deviceType() {
-            return DAL.DEVICE_TYPE_NXT_IIC;
         }
 
         _IICId() {
