@@ -8,8 +8,9 @@ const enum HTCS2SoftMode {
     ActiveAll = 0,
     ActiveColor = 1,
     ActiveRgbw = 2,
-    PassiveRawRgbw = 5,
-    ActiveRawRgbw = 6,
+    ActiveNormRgb = 3,
+    PassiveRawRgbw = 4,
+    ActiveRawRgbw = 5
 }
 
 const enum HTCS2FreqMode {
@@ -73,6 +74,8 @@ namespace sensors {
                 return [this.getBytes()[0]];
             } else if (this.mode == HTCS2SoftMode.ActiveRgbw) {
                 return [this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4]];
+            } else if (this.mode == HTCS2SoftMode.ActiveNormRgb) {
+                return [this.getBytes()[6], this.getBytes()[7], this.getBytes()[8]];
             } else if (this.mode == HTCS2SoftMode.PassiveRawRgbw || this.mode == HTCS2SoftMode.ActiveRawRgbw) {
                 return [this.getBytes()[0], this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4], this.getBytes()[5], this.getBytes()[6], this.getBytes()[7]];
             }
@@ -110,7 +113,7 @@ namespace sensors {
          * Get array with color, red, green, blue, white values from HiTechnic Color Sensor v2 at standart active mode.
          * @param sensor the ht color sensor v2 port
          */
-        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/all
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-all
         //% block="**ht color sensor** $this|all values at active"
         //% block.loc.ru="**ht датчик цвета** $this|все значения с включённой подсветкой"
         //% blockId=HTCS2GetActiveAll
@@ -130,7 +133,7 @@ namespace sensors {
          * Get color code from HiTechnic Color Sensor v2 at standart active mode.
          * @param sensor the ht color sensor v2 port
          */
-        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/color
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-color
         //% block="**ht color sensor** $this|color at active"
         //% block.loc.ru="**ht датчик цвета** $this|цвет с включённой подсветкой"
         //% blockId=HTCS2GetActiveColor
@@ -150,7 +153,7 @@ namespace sensors {
          * Get array with RGBW values from HiTechnic Color Sensor v2 at standart active mode.
          * @param sensor the ht color sensor v2 port
          */
-        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/rgbw
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-rgbw
         //% block="**ht color sensor** $this|RGBW at active"
         //% block.loc.ru="**ht датчик цвета** $this|RGBW с включённой подсветкой"
         //% blockId=HTCS2GetActiveRGBW
@@ -167,10 +170,30 @@ namespace sensors {
         }
 
         /**
+         * Get array with RGBW values from HiTechnic Color Sensor v2 at standart active mode.
+         * @param sensor the ht color sensor v2 port
+         */
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-rgbw
+        //% block="**ht color sensor** $this|norm RGB at active"
+        //% block.loc.ru="**ht датчик цвета** $this|нормализованные RGB с включённой подсветкой"
+        //% blockId=HTCS2GetActiveNormRGB
+        //% parts="htcolorsensor2"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=98 blockGap=12
+        //% subcategory="HiTechnic"
+        //% group="Color Sensor V2"
+        getActiveNormRGB(): number[] {
+            this.setMode(HTCS2SoftMode.ActiveNormRgb);
+            this.poke();
+            return this._query();
+        }
+
+        /**
          * Get array with RGBW values from HiTechnic Color Sensor v2 when the backlight is off.
          * @param sensor the ht color sensor v2 port
          */
-        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/passive-rgbw
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/passive-raw-rgbw
         //% block="**ht color sensor** $this|raw RGBW at passive"
         //% block.loc.ru="**ht датчик цвета** $this|сырые RGBW с выключеной подсветкой"
         //% blockId=HTCS2GetPassiveRawRGBW
@@ -193,7 +216,7 @@ namespace sensors {
          * Get array with raw RGBW values from HiTechnic Color Sensor v2 when the backlight is on.
          * @param sensor the ht color sensor v2 port
          */
-        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/raw-rgbw
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-raw-rgbw
         //% block="**ht color sensor** $this|raw RGBW at active"
         //% block.loc.ru="**ht датчик цвета** $this|сырые RGBW с включённой подсветкой"
         //% blockId=HTCS2GetActiveRawRGBW
@@ -213,12 +236,12 @@ namespace sensors {
         }
 
         /**
-         * Get array with HSVL values from HiTechnic Color Sensor v2.
+         * Get array with HSVL values from HiTechnic Color Sensor v2 when the backlight is on.
          * @param sensor the ht color sensor v2 port
          */
-        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/hsvl
-        //% block="**ht color sensor** $this|HSVL"
-        //% block.loc.ru="**ht датчик цвета** $this|HSVL"
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-hsvl
+        //% block="**ht color sensor** $this|HSVL at active"
+        //% block.loc.ru="**ht датчик цвета** $this|HSVL с включённой подсветкой"
         //% blockId=HTCS2GetActiveHSVL
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
