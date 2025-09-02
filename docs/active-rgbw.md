@@ -1,12 +1,12 @@
-# RGBW value
+# Passive RAW RGBW value
 
 Get values from the sensor: r, g, b, white.
 
 ```sig
-sensors.htColor1.getRGBW()
+sensors.htColor1.getPassiveRawRGBW()
 ```
 
-The return value is an array with the values red, green, blue, white. The color components red, green, blue give values from 0 to 255. They are already normalized. White gives a white reflectance value also from 0 to 255.
+The return value is an array with the values red, green, blue, white. The color components red, green, blue give values. White gives a white reflectance value.
 
 ## Returns
 
@@ -19,17 +19,17 @@ Display the values of the ``red``, ``green``, ``blue`` and ``white`` components.
 ```blocks
 forever(function () {
     brick.clearScreen();
-    brick.showValue("R", sensors.htColor1.getRGBW()[0], 1);
-    brick.showValue("G", sensors.htColor1.getRGBW()[1], 2);
-    brick.showValue("B", sensors.htColor1.getRGBW()[2], 3);
-    brick.showValue("W", sensors.htColor1.getRGBW()[3], 4);
+    brick.showValue("R", sensors.htColor1.getPassiveRawRGBW()[0], 1);
+    brick.showValue("G", sensors.htColor1.getPassiveRawRGBW()[1], 2);
+    brick.showValue("B", sensors.htColor1.getPassiveRawRGBW()[2], 3);
+    brick.showValue("W", sensors.htColor1.getPassiveRawRGBW()[3], 4);
     pause(100);
 })
 ```
 
 ## See slso
 
-[all](/docs/reference/sensors/ht-color-sensor-v2/all),
-[raw rgbw](/docs/reference/sensors/ht-color-sensor-v2/raw-rgbw),
-[passive rgbw](/docs/reference/sensors/ht-color-sensor-v2/passive-rgbw),
-[hsvl](/docs/reference/sensors/ht-color-sensor-v2/hsvl)
+[active all](/docs/reference/sensors/ht-color-sensor-v2/active-all),
+[active raw rgbw](/docs/reference/sensors/ht-color-sensor-v2/active-raw-rgbw),
+[passive raw rgbw](/docs/reference/sensors/ht-color-sensor-v2/passive-raw-rgbw),
+[active hsvl](/docs/reference/sensors/ht-color-sensor-v2/active-hsvl)
