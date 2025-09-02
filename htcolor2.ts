@@ -15,9 +15,9 @@ const enum HTCS2SoftMode {
 
 const enum HTCS2FreqMode {
     //% block="50"
-    Freq50 = 53, // Set sensor to 50Hz cancellation mode // 35
+    Freq50 = 53, // Set sensor to 50Hz cancellation mode // 0x35
     //% block="60"
-    Freq60 = 54 // Set sensor to 60Hz cancellation mode // 36
+    Freq60 = 54 // Set sensor to 60Hz cancellation mode // 0x36
 }
 
 namespace sensors {
@@ -27,6 +27,8 @@ namespace sensors {
     // https://www.youtube.com/watch?v=-QG2p6HcAT0
     // https://github.com/salavater/Clev3r-HTColor
 
+    const SEND_REGISRER = 65; // 0x41
+    const READ_REGISRER = 66; // 0x42
     const MODE_SWITCH_DELAY = 100;
 
     /**
@@ -35,6 +37,8 @@ namespace sensors {
     */
     //% fixedInstances
     export class HiTechnicColorSensor2 extends sensors.internal.IICSensor {
+
+        readSize: number = 9; // How many bytes to read
 
         constructor(port: number) {
             super(port);
@@ -59,18 +63,21 @@ namespace sensors {
                     m == HTCS2SoftMode.ActiveColor ||
                     m == HTCS2SoftMode.ActiveRgbw ||
                     m == HTCS2SoftMode.ActiveNormRgb) {
-                    this.transaction(1, [65, HTCS2Mode.Active], 0);
+                    this.transaction(1, [SEND_REGISRER, HTCS2Mode.Active], 0);
+                    this.readSize = 9;
                 } else if (m == HTCS2SoftMode.PassiveRawRgbw) {
-                    this.transaction(1, [65, HTCS2Mode.PassiveRaw], 0);
+                    this.transaction(1, [SEND_REGISRER, HTCS2Mode.PassiveRaw], 0);
+                    this.readSize = 8;
                 } else if (m == HTCS2SoftMode.ActiveRawRgbw) {
-                    this.transaction(1, [65, HTCS2Mode.ActiveRaw], 0);
+                    this.transaction(1, [SEND_REGISRER, HTCS2Mode.ActiveRaw], 0);
+                    this.readSize = 8;
                 }
                 pause(MODE_SWITCH_DELAY);
             }
         }
 
         _query() {
-            this.transaction(1, [66], 8);
+            this.transaction(1, [READ_REGISRER], this.readSize);
             if (this.mode == HTCS2SoftMode.ActiveAll) {
                 return [this.getBytes()[0], this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4], this.getBytes()[5], this.getBytes()[6], this.getBytes()[7], this.getBytes()[8]];
             } else if (this.mode == HTCS2SoftMode.ActiveColor) {
@@ -334,7 +341,7 @@ namespace sensors {
         //% group="Color Sensor V2"
         setHz(freq: HTCS2FreqMode) {
             // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
-            this.transaction(1, [65, freq], 0);
+            this.transaction(1, [SEND_REGISRER, freq], 0);
             pause(MODE_SWITCH_DELAY);
         }
 
