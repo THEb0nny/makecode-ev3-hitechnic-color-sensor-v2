@@ -10,13 +10,13 @@
         "README.md",
         "htcolor2.ts",
         "docs/ht-color-sensor-v2.md",
-        "docs/all.md",
-        "docs/rgbw.md",
-        "docs/raw-rgbw.md",
-        "docs/passive-rgbw.md",
+        "docs/active-all.md",
+        "docs/active-rgbw.md",
+        "docs/active-raw-rgbw.md",
+        "docs/passive-raw-rgbw.md",
         "docs/mode.md",
-        "docs/color.md",
-        "docs/hsvl.md"
+        "docs/active-color.md",
+        "docs/activehsvl.md"
     ],
     "testFiles": [
         "test.ts"
