@@ -38,7 +38,7 @@ namespace sensors {
     //% fixedInstances
     export class HiTechnicColorSensor2 extends sensors.internal.IICSensor {
 
-        readSize: number = 9; // How many bytes to read
+        readByts: number = 9; // How many bytes to read
 
         constructor(port: number) {
             super(port);
@@ -64,20 +64,20 @@ namespace sensors {
                     m == HTCS2SoftMode.ActiveRgbw ||
                     m == HTCS2SoftMode.ActiveNormRgb) {
                     this.transaction(1, [SEND_REGISRER, HTCS2Mode.Active], 0);
-                    this.readSize = 9;
+                    this.readByts = 9;
                 } else if (m == HTCS2SoftMode.PassiveRawRgbw) {
                     this.transaction(1, [SEND_REGISRER, HTCS2Mode.PassiveRaw], 0);
-                    this.readSize = 8;
+                    this.readByts = 8;
                 } else if (m == HTCS2SoftMode.ActiveRawRgbw) {
                     this.transaction(1, [SEND_REGISRER, HTCS2Mode.ActiveRaw], 0);
-                    this.readSize = 8;
+                    this.readByts = 8;
                 }
                 pause(MODE_SWITCH_DELAY);
             }
         }
 
         _query() {
-            this.transaction(1, [READ_REGISRER], this.readSize);
+            this.transaction(1, [READ_REGISRER], this.readByts);
             if (this.mode == HTCS2SoftMode.ActiveAll) {
                 return [this.getBytes()[0], this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4], this.getBytes()[5], this.getBytes()[6], this.getBytes()[7], this.getBytes()[8]];
             } else if (this.mode == HTCS2SoftMode.ActiveColor) {
