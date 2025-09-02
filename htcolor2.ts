@@ -1,7 +1,7 @@
 const enum HTCS2Mode {
-    Active = 0, // Use ambient light cancellation
-    Passive = 1, // Disable ambient light cancellation
-    Raw = 3 // Raw data from light sensor
+    Active = 0, // Standard mode with backlight on
+    PassiveRaw = 1, // Disable ambient light cancellation
+    ActiveRaw = 3 // Raw data from the ambient light sensor with the backlight on
 }
 
 const enum HTCS2SoftMode {
@@ -20,6 +20,10 @@ const enum HTCS2FreqMode {
 }
 
 namespace sensors {
+
+    // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
+    // https://www.youtube.com/watch?v=-QG2p6HcAT0
+    // https://github.com/salavater/Clev3r-HTColor
 
     const MODE_SWITCH_DELAY = 100;
 
@@ -52,9 +56,9 @@ namespace sensors {
                 if (m == HTCS2SoftMode.All || m == HTCS2SoftMode.Color || m == HTCS2SoftMode.Rgbw) {
                     this.transaction(1, [65, HTCS2Mode.Active], 0);
                 } else if (m == HTCS2SoftMode.PassiveRgbw) {
-                    this.transaction(1, [65, HTCS2Mode.Passive], 0);
+                    this.transaction(1, [65, HTCS2Mode.PassiveRaw], 0);
                 } else if (m == HTCS2SoftMode.RawRgbw) {
-                    this.transaction(1, [65, HTCS2Mode.Raw], 0);
+                    this.transaction(1, [65, HTCS2Mode.ActiveRaw], 0);
                 }
                 pause(MODE_SWITCH_DELAY);
             }
