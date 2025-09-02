@@ -1,23 +1,23 @@
 # HiTechnic Color Sensor v2
 
 ```cards
-sensors.htColor1.getAll()
-sensors.htColor1.getColor()
-sensors.htColor1.getRGBW()
-sensors.htColor1.getRawRGBW()
-sensors.htColor1.getPassiveRGBW()
-sensors.htColor1.getHSVL()
+sensors.htColor1.getActiveAll()
+sensors.htColor1.getActiveColor()
+sensors.htColor1.getActiveRGBW()
+sensors.htColor1.getActiveRawRGBW()
+sensors.htColor1.getPassiveRawRGBW()
+sensors.htColor1.getActiveHSVL()
 sensors.htColor1.setHz(HTCS2FreqMode.Freq50)
 sensors.htColor1.setHz(HTCS2FreqMode.Freq60)
 ```
 
 ## See slso
 
-[all](/docs/reference/sensors/ht-color-sensor-v2/all),
-[color](/docs/reference/sensors/ht-color-sensor-v2/color),
-[rgbw](/docs/reference/sensors/ht-color-sensor-v2/color),
-[raw rgbw](/docs/reference/sensors/ht-color-sensor-v2/raw-rgbw),
-[passive rgbw](/docs/reference/sensors/ht-color-sensor-v2/passive-rgbw),
-[hsvl](/docs/reference/sensors/ht-color-sensor-v2/hsvl),
+[active all](/docs/reference/sensors/ht-color-sensor-v2/active-all),
+[active color](/docs/reference/sensors/ht-color-sensor-v2/active-color),
+[active rgbw](/docs/reference/sensors/ht-color-sensor-v2/active-rgbw),
+[active raw rgbw](/docs/reference/sensors/ht-color-sensor-v2/active-raw-rgbw),
+[passive raw rgbw](/docs/reference/sensors/ht-color-sensor-v2/passive-raw-rgbw),
+[active hsvl](/docs/reference/sensors/ht-color-sensor-v2/active-hsvl),
 [frequency](/docs/reference/sensors/ht-color-sensor-v2/frequency),
 [mode](/docs/reference/sensors/ht-color-sensor-v2/mode)

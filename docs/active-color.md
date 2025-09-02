@@ -26,4 +26,4 @@ forever(function () {
 
 ## See slso
 
-[all](/docs/reference/sensors/ht-color-sensor-v2/active-all)
+[active all](/docs/reference/sensors/ht-color-sensor-v2/active-all)

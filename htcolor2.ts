@@ -55,7 +55,10 @@ namespace sensors {
             if (!this.isActive()) return;
             if (this.realmode != this.mode) {
                 this.realmode = v;
-                if (m == HTCS2SoftMode.ActiveAll || m == HTCS2SoftMode.ActiveColor || m == HTCS2SoftMode.ActiveRgbw) {
+                if (m == HTCS2SoftMode.ActiveAll || 
+                    m == HTCS2SoftMode.ActiveColor ||
+                    m == HTCS2SoftMode.ActiveRgbw ||
+                    m == HTCS2SoftMode.ActiveNormRgb) {
                     this.transaction(1, [65, HTCS2Mode.Active], 0);
                 } else if (m == HTCS2SoftMode.PassiveRawRgbw) {
                     this.transaction(1, [65, HTCS2Mode.PassiveRaw], 0);
@@ -85,8 +88,15 @@ namespace sensors {
         _info() {
             if (HTCS2SoftMode.ActiveColor) {
                 return [this._query()[0].toString()];
-            } else if (this.mode == HTCS2SoftMode.ActiveAll || this.mode == HTCS2SoftMode.ActiveRgbw || this.mode == HTCS2SoftMode.PassiveRawRgbw || this.mode == HTCS2SoftMode.ActiveRawRgbw) {
+            } else if (this.mode == HTCS2SoftMode.ActiveAll || 
+                this.mode == HTCS2SoftMode.ActiveRgbw || 
+                this.mode == HTCS2SoftMode.ActiveNormRgb) {
                 return this._query().map(number => number.toString());
+            } else if(this.mode == HTCS2SoftMode.ActiveAll ||
+                this.mode == HTCS2SoftMode.PassiveRawRgbw || 
+                this.mode == HTCS2SoftMode.ActiveRawRgbw) {
+                // ToDo Значения PassiveRawRgbw и ActiveRawRgbw нужно выводить не в таком виде
+                return ["ToDo"];
             }
             return ["0"];
         }
@@ -170,10 +180,10 @@ namespace sensors {
         }
 
         /**
-         * Get array with RGBW values from HiTechnic Color Sensor v2 at standart active mode.
+         * Get array with RGB normalize values from HiTechnic Color Sensor v2 at standart active mode.
          * @param sensor the ht color sensor v2 port
          */
-        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-rgbw
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-norm-rgb
         //% block="**ht color sensor** $this|norm RGB at active"
         //% block.loc.ru="**ht датчик цвета** $this|нормализованные RGB с включённой подсветкой"
         //% blockId=HTCS2GetActiveNormRGB
