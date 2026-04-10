@@ -27,8 +27,8 @@ namespace sensors {
     // https://www.youtube.com/watch?v=-QG2p6HcAT0
     // https://github.com/salavater/Clev3r-HTColor
 
-    const SEND_REGISRER = 65; // 0x41
-    const READ_REGISRER = 66; // 0x42
+    const SEND_REGISTER = 65; // 0x41
+    const READ_REGISTER = 66; // 0x42
     const MODE_SWITCH_DELAY = 100;
 
     /**
@@ -63,13 +63,13 @@ namespace sensors {
                     m == HTCS2SoftMode.ActiveColor ||
                     m == HTCS2SoftMode.ActiveRgbw ||
                     m == HTCS2SoftMode.ActiveNormRgb) {
-                    this.transaction(1, [SEND_REGISRER, HTCS2Mode.Active], 0);
+                    this.transaction(1, [SEND_REGISTER, HTCS2Mode.Active], 0);
                     this.readByts = 9;
                 } else if (m == HTCS2SoftMode.PassiveRawRgbw) {
-                    this.transaction(1, [SEND_REGISRER, HTCS2Mode.PassiveRaw], 0);
+                    this.transaction(1, [SEND_REGISTER, HTCS2Mode.PassiveRaw], 0);
                     this.readByts = 8;
                 } else if (m == HTCS2SoftMode.ActiveRawRgbw) {
-                    this.transaction(1, [SEND_REGISRER, HTCS2Mode.ActiveRaw], 0);
+                    this.transaction(1, [SEND_REGISTER, HTCS2Mode.ActiveRaw], 0);
                     this.readByts = 8;
                 }
                 pause(MODE_SWITCH_DELAY);
@@ -77,7 +77,7 @@ namespace sensors {
         }
 
         _query() {
-            this.transaction(1, [READ_REGISRER], this.readByts);
+            this.transaction(1, [READ_REGISTER], this.readByts);
             if (this.mode == HTCS2SoftMode.ActiveAll) {
                 return [this.getBytes()[0], this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4], this.getBytes()[5], this.getBytes()[6], this.getBytes()[7], this.getBytes()[8]];
             } else if (this.mode == HTCS2SoftMode.ActiveColor) {
@@ -93,17 +93,22 @@ namespace sensors {
         }
 
         _info() {
-            if (HTCS2SoftMode.ActiveColor) {
+            if (this.mode == HTCS2SoftMode.ActiveColor) {
                 return [this._query()[0].toString()];
             } else if (this.mode == HTCS2SoftMode.ActiveAll || 
                 this.mode == HTCS2SoftMode.ActiveRgbw || 
                 this.mode == HTCS2SoftMode.ActiveNormRgb) {
                 return this._query().map(number => number.toString());
-            } else if(this.mode == HTCS2SoftMode.ActiveAll ||
-                this.mode == HTCS2SoftMode.PassiveRawRgbw || 
+            } else if(this.mode == HTCS2SoftMode.PassiveRawRgbw || 
                 this.mode == HTCS2SoftMode.ActiveRawRgbw) {
-                // ToDo Значения PassiveRawRgbw и ActiveRawRgbw нужно выводить не в таком виде
-                return ["ToDo"];
+                // ToDo
+                this.poke();
+                const bytes = this.getBytes();
+                const r = bytes[0] * 256 + bytes[1];
+                const g = bytes[2] * 256 + bytes[3];
+                const b = bytes[4] * 256 + bytes[5];
+                const w = bytes[6] * 256 + bytes[7];
+                return [r.toString(), g.toString(), b.toString(), w.toString()];
             }
             return ["0"];
         }
@@ -132,7 +137,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-all
         //% block="**ht color sensor** $this|all values at active"
-        //% block.loc.ru="**ht датчик цвета** $this|все значения с включённой подсветкой"
+        //% block.loc.ru="**ht датчик цвета** $this|все значения с подсветкой"
         //% blockId=HTCS2GetActiveAll
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
@@ -152,7 +157,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-color
         //% block="**ht color sensor** $this|color at active"
-        //% block.loc.ru="**ht датчик цвета** $this|цвет с включённой подсветкой"
+        //% block.loc.ru="**ht датчик цвета** $this|цвет с подсветкой"
         //% blockId=HTCS2GetActiveColor
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
@@ -172,7 +177,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-rgbw
         //% block="**ht color sensor** $this|RGBW at active"
-        //% block.loc.ru="**ht датчик цвета** $this|RGBW с включённой подсветкой"
+        //% block.loc.ru="**ht датчик цвета** $this|RGBW с подсветкой"
         //% blockId=HTCS2GetActiveRGBW
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
@@ -192,7 +197,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-norm-rgb
         //% block="**ht color sensor** $this|norm RGB at active"
-        //% block.loc.ru="**ht датчик цвета** $this|нормализованные RGB с включённой подсветкой"
+        //% block.loc.ru="**ht датчик цвета** $this|нормализованные RGB с подсветкой"
         //% blockId=HTCS2GetActiveNormRGB
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
@@ -212,7 +217,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/passive-raw-rgbw
         //% block="**ht color sensor** $this|raw RGBW at passive"
-        //% block.loc.ru="**ht датчик цвета** $this|сырые RGBW с выключеной подсветкой"
+        //% block.loc.ru="**ht датчик цвета** $this|сырые RGBW без подсветки"
         //% blockId=HTCS2GetPassiveRawRGBW
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
@@ -222,6 +227,7 @@ namespace sensors {
         //% group="Color Sensor V2"
         getPassiveRawRGBW(): number[] {
             this.setMode(HTCS2SoftMode.PassiveRawRgbw);
+            this.poke();
             const r = this.getBytes()[0] * 256 + this.getBytes()[1];
             const g = this.getBytes()[2] * 256 + this.getBytes()[3];
             const b = this.getBytes()[4] * 256 + this.getBytes()[5];
@@ -235,7 +241,7 @@ namespace sensors {
          */
         //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-raw-rgbw
         //% block="**ht color sensor** $this|raw RGBW at active"
-        //% block.loc.ru="**ht датчик цвета** $this|сырые RGBW с включённой подсветкой"
+        //% block.loc.ru="**ht датчик цвета** $this|сырые RGBW с подсветкой"
         //% blockId=HTCS2GetActiveRawRGBW
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
@@ -245,6 +251,7 @@ namespace sensors {
         //% group="Color Sensor V2"
         getActiveRawRGBW(): number[] {
             this.setMode(HTCS2SoftMode.ActiveRawRgbw);
+            this.poke();
             const r = this.getBytes()[0] * 256 + this.getBytes()[1];
             const g = this.getBytes()[2] * 256 + this.getBytes()[3];
             const b = this.getBytes()[4] * 256 + this.getBytes()[5];
@@ -253,26 +260,10 @@ namespace sensors {
         }
 
         /**
-         * Get array with HSVL values from HiTechnic Color Sensor v2 when the backlight is on.
-         * @param sensor the ht color sensor v2 port
+         * Приватный метод для вычисления HSVL из RGB значений датчика
          */
-        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-hsvl
-        //% block="**ht color sensor** $this|HSVL at active"
-        //% block.loc.ru="**ht датчик цвета** $this|HSVL с включённой подсветкой"
-        //% blockId=HTCS2GetActiveHSVL
-        //% parts="htcolorsensor2"
-        //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
-        //% weight=95
-        //% subcategory="HiTechnic"
-        //% group="Color Sensor V2"
-        getActiveHSVL(): number[] {
-            // https://github.com/botbench/robotcdriversuite/blob/master/include/common-light.h
-            // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
-            this.setMode(HTCS2SoftMode.ActiveRgbw);
-            this.poke();
-            const rgbArr = this._query();
-            let r = rgbArr[0], g = rgbArr[1], b = rgbArr[2];
+        private _rgbToHsvl(rgb: number[]): number[] {
+            let r = rgb[0], g = rgb[1], b = rgb[2];
 
             // https://clev3r.ru/codesamples/
             // Color sensor V2 RGB Maxmium is 255
@@ -298,7 +289,7 @@ namespace sensors {
                 rgb_min = Math.min(Math.min(r, g), b);
 
                 sat = (rgb_max - rgb_min) * 100;
-                
+
                 if (sat == 0) {
                     hue = -1;
                 }
@@ -325,6 +316,50 @@ namespace sensors {
         }
 
         /**
+         * Get array with HSVL values from HiTechnic Color Sensor v2 when the backlight is on.
+         * @param sensor the ht color sensor v2 port
+         */
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-hsvl
+        //% block="**ht color sensor** $this|HSVL at active"
+        //% block.loc.ru="**ht датчик цвета** $this|HSVL с подсветкой"
+        //% blockId=HTCS2GetActiveHSVL
+        //% parts="htcolorsensor2"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=95
+        //% subcategory="HiTechnic"
+        //% group="Color Sensor V2"
+        getActiveHSVL(): number[] {
+            // https://github.com/botbench/robotcdriversuite/blob/master/include/common-light.h
+            // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
+            this.setMode(HTCS2SoftMode.ActiveRgbw);
+            this.poke();
+            const rgbw = this._query();
+            return this._rgbToHsvl(rgbw);
+        }
+
+        /**
+         * Get RGBW + HSVL values from HiTechnic Color Sensor v2 at active mode.
+         */
+        //% help=github:makecode-ev3-hitechnic-color-sensor-v2/docs/active-rgbw-hsvl
+        //% block="**ht color sensor** $this|RGBW + HSVL at active"
+        //% block.loc.ru="**ht датчик цвета** $this|RGBW + HSVL с подсветкой"
+        //% blockId=HTCS2GetActiveRGBWHSVL
+        //% parts="htcolorsensor2"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=96 blockGap=12
+        //% subcategory="HiTechnic"
+        //% group="Color Sensor V2"
+        getActiveRGBWHSVL(): number[][] {
+            this.setMode(HTCS2SoftMode.ActiveRgbw);
+            this.poke();
+            const rgbw = this._query();
+            const hsvl = this._rgbToHsvl(rgbw);
+            return [rgbw, hsvl];
+        }
+
+        /**
          * Set the sensor to the selected frequency to HiTechnic Color Sensor v2. The Sensor is configured by default for locations with 60Hz electrical supplies.
          * @param sensor the ht color sensor v2 port
          * @param freq the ht color sensor v2 frequency
@@ -341,7 +376,7 @@ namespace sensors {
         //% group="Color Sensor V2"
         setHz(freq: HTCS2FreqMode) {
             // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
-            this.transaction(1, [SEND_REGISRER, freq], 0);
+            this.transaction(1, [SEND_REGISTER, freq], 0);
             pause(MODE_SWITCH_DELAY);
         }
 
