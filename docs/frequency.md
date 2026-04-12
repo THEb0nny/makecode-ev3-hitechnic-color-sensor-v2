@@ -13,7 +13,7 @@ The Sensor is configured by default for locations with 60Hz electrical supplies.
 In this example the frequency is set to `50 Hz`.
 
 ```blocks
-sensors.htColor1.setHz(HTCS2FreqMode.Freq50)
+sensors.htColor1.setHz(HTCS2FreqMode.Freq50);
 ```
 
 ## See also

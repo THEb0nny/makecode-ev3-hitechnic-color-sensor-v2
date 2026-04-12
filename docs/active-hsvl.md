@@ -1,4 +1,4 @@
-# RGBW value
+# Active HSVL values
 
 Get array of HSVL values from RGBW mode.
 ```sig
@@ -22,11 +22,11 @@ forever(function () {
     brick.showValue("S", sensors.htColor1.getHSVL()[1], 2);
     brick.showValue("V", sensors.htColor1.getHSVL()[2], 3);
     brick.showValue("L", sensors.htColor1.getHSVL()[3], 4);
-    pause(100);
+    pause(10);
 })
 ```
 
 ## See also
 
-[all](/docs/reference/sensors/ht-color-sensor-v2/all),
-[rgbw](/docs/reference/sensors/ht-color-sensor-v2/color)
+[all](/docs/reference/sensors/ht-color-sensor-v2/active-all),
+[color](/docs/reference/sensors/ht-color-sensor-v2/active-color)

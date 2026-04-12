@@ -23,7 +23,7 @@ forever(function () {
     brick.showValue("G", sensors.htColor1.getActiveRawRGBW()[1], 2);
     brick.showValue("B", sensors.htColor1.getActiveRawRGBW()[2], 3);
     brick.showValue("W", sensors.htColor1.getActiveRawRGBW()[3], 4);
-    pause(100);
+    pause(10);
 })
 ```
 

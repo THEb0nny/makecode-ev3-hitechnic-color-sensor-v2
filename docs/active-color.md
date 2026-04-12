@@ -20,7 +20,7 @@ Display the values of the ``color``, ``red``, ``green``, ``blue`` and ``white`` 
 forever(function () {
     brick.clearScreen();
     brick.showValue("C", sensors.htColor1.getActiveColor(), 1);
-    pause(100);
+    pause(10);
 })
 ```
 

@@ -24,7 +24,7 @@ forever(function () {
     brick.showValue("G", sensors.htColor1.getActiveAll()[2], 3);
     brick.showValue("B", sensors.htColor1.getActiveAll()[3], 4);
     brick.showValue("W", sensors.htColor1.getActiveAll()[4], 5);
-    pause(100);
+    pause(10);
 })
 ```
 
