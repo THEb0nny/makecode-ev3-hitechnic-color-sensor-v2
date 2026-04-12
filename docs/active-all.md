@@ -1,4 +1,4 @@
-# All values
+# Active all values
 
 Get all values from the sensor: color, r, g, b, white, color index number, normalized red, normalized green, normalized blue.
 

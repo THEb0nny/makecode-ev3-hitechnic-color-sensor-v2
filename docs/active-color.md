@@ -1,4 +1,4 @@
-# Color
+# Active color
 
 Get the color number value.
 
