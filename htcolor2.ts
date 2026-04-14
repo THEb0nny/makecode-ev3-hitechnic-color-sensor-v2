@@ -25,8 +25,9 @@ namespace sensors {
     // https://web.archive.org/web/20240316155720/https://modernroboticsinc.com/product/hitechnic-nxt-color-sensor-v2/
     // https://web.archive.org/web/20170413234343/http://botbench.com/driversuite/hitechnic-colour-v2_8h_source.html
     // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
-    // https://www.youtube.com/watch?v=-QG2p6HcAT0
     // https://github.com/salavater/Clev3r-HTColor
+    // https://www.youtube.com/watch?v=-QG2p6HcAT0
+    // https://picaxe.com/circuit-creator/sensors/lego-nxt-rgb-color-sensor-v2/
 
     const SEND_REGISTER = 65; // 0x41
     const READ_REGISTER = 66; // 0x42
