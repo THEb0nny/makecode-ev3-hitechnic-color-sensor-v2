@@ -361,6 +361,18 @@ namespace sensors {
             return [rgbw, hsvl];
         }
 
+        /**
+         * Get normalize RGB + HSVL values from HiTechnic Color Sensor v2 at active mode.
+         */
+        //% block="**ht color sensor** $this|norm RGB + HSVL at active"
+        //% block.loc.ru="**ht датчик цвета** $this|нормализованный RGB + HSVL с подсветкой"
+        //% blockId=HTCS2GetActiveNormRGBHSVL
+        //% parts="htcolorsensor2"
+        //% blockNamespace=sensors
+        //% this.fieldEditor="ports"
+        //% weight=96 blockGap=12
+        //% subcategory="HiTechnic"
+        //% group="Color Sensor V2"
         getActiveNormRGBHSVL(): number[][] {
             this.setMode(HTCS2SoftMode.ActiveNormRgb);
             this.poke();
