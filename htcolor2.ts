@@ -230,14 +230,10 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getColorIndex(): number {
-            // Переключаемся в режим ActiveAll, чтобы прочитать полный буфер из 9 байт
+            // https://share.google/aimode/BgJq5fdf9TAafeNWg
             this.setMode(HTCS2SoftMode.ActiveAll);
             this.poke();
-
-            // В режиме ActiveAll метод _query() возвращает массив из 9 элементов.
-            // Регистр 0x0E (Color Index Number) находится на 6-й позиции (индекс 5).
-            let allBytes = this._query();
-            return allBytes[5];
+            return this._query()[5];
         }
 
         /**
