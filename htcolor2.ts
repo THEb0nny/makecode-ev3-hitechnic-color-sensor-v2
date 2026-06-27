@@ -8,9 +8,10 @@ const enum HTCS2SoftMode {
     ActiveAll = 0,
     ActiveColor = 1,
     ActiveRgbw = 2,
-    ActiveNormRgb = 3,
-    PassiveRawRgbw = 4,
-    ActiveRawRgbw = 5
+    ActiveColorIdxNum = 3,
+    ActiveNormRgb = 4,
+    PassiveRawRgbw = 5,
+    ActiveRawRgbw = 6
 }
 
 const enum HTCS2FreqMode {
@@ -62,8 +63,9 @@ namespace sensors {
             if (this.realmode != this.mode) {
                 this.realmode = v;
                 if (m == HTCS2SoftMode.ActiveAll || 
-                    m == HTCS2SoftMode.ActiveColor ||
-                    m == HTCS2SoftMode.ActiveRgbw ||
+                    m == HTCS2SoftMode.ActiveColor || 
+                    m == HTCS2SoftMode.ActiveRgbw || 
+                    m == HTCS2SoftMode.ActiveColorIdxNum || 
                     m == HTCS2SoftMode.ActiveNormRgb) {
                     this.transaction(1, [SEND_REGISTER, HTCS2Mode.Active], 0);
                     this.readByts = 9;
@@ -86,6 +88,8 @@ namespace sensors {
                 return [this.getBytes()[0]];
             } else if (this.mode == HTCS2SoftMode.ActiveRgbw) {
                 return [this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4]];
+            } else if (this.mode == HTCS2SoftMode.ActiveColorIdxNum) {
+                return [this.getBytes()[5]];
             } else if (this.mode == HTCS2SoftMode.ActiveNormRgb) {
                 return [this.getBytes()[6], this.getBytes()[7], this.getBytes()[8]];
             } else if (this.mode == HTCS2SoftMode.PassiveRawRgbw || this.mode == HTCS2SoftMode.ActiveRawRgbw) {
@@ -99,6 +103,7 @@ namespace sensors {
                 return [this._query()[0].toString()];
             } else if (this.mode == HTCS2SoftMode.ActiveAll || 
                 this.mode == HTCS2SoftMode.ActiveRgbw || 
+                this.mode == HTCS2SoftMode.ActiveColorIdxNum || 
                 this.mode == HTCS2SoftMode.ActiveNormRgb) {
                 return this._query().map(number => number.toString());
             } else if(this.mode == HTCS2SoftMode.PassiveRawRgbw || 
@@ -113,6 +118,62 @@ namespace sensors {
                 return [r.toString(), g.toString(), b.toString(), w.toString()];
             }
             return ["0"];
+        }
+
+        /**
+         * Приватный метод для вычисления HSVL из RGB значений датчика
+         */
+        private _rgbToHsvl(rgb: number[]): number[] {
+            let r = rgb[0], g = rgb[1], b = rgb[2];
+
+            // https://clev3r.ru/codesamples/
+            // Color sensor V2 RGB Maxmium is 255
+            let hue = 0, sat = 0, val = 0, light = 0;
+
+            let rgb_max = Math.max(Math.max(r, g), b);
+            let rgb_min = Math.min(Math.min(r, g), b);
+
+            light = (rgb_max + rgb_min) / 5.12;
+            val = rgb_max / 2.56;
+
+            if (val == 0) { // It's black, there's no way to tell hue and sat // val == 0 || rgb_max == 0
+                hue = -1;
+                sat = -1;
+            }
+
+            if (hue != -1 && sat != -1) {
+                r = r / rgb_max;
+                g = g / rgb_max;
+                b = b / rgb_max;
+
+                rgb_max = Math.max(Math.max(r, g), b);
+                rgb_min = Math.min(Math.min(r, g), b);
+
+                sat = (rgb_max - rgb_min) * 100;
+
+                if (sat == 0) {
+                    hue = -1;
+                }
+
+                if (hue != -1) { // It's white, there's no way to tell hue
+                    r = (r - rgb_min) / (rgb_max - rgb_min);
+                    g = (g - rgb_min) / (rgb_max - rgb_min);
+                    b = (b - rgb_min) / (rgb_max - rgb_min);
+
+                    rgb_max = Math.max(Math.max(r, g), b);
+                    rgb_min = Math.min(Math.min(r, g), b);
+
+                    if (rgb_max == r) {
+                        hue = 0 + 60 * (g - b);
+                        if (hue < 0) hue += 360;
+                    } else if (rgb_max == g) {
+                        hue = 120 + 60 * (b - r);
+                    } else {
+                        hue = 240 + 60 * (r - g);
+                    }
+                }
+            }
+            return [Math.round(hue), Math.round(sat), Math.round(val), Math.round(light)];
         }
 
         /**
@@ -254,62 +315,6 @@ namespace sensors {
             this.setMode(HTCS2SoftMode.ActiveNormRgb);
             this.poke();
             return this._query();
-        }
-
-        /**
-         * Приватный метод для вычисления HSVL из RGB значений датчика
-         */
-        private _rgbToHsvl(rgb: number[]): number[] {
-            let r = rgb[0], g = rgb[1], b = rgb[2];
-
-            // https://clev3r.ru/codesamples/
-            // Color sensor V2 RGB Maxmium is 255
-            let hue = 0, sat = 0, val = 0, light = 0;
-
-            let rgb_max = Math.max(Math.max(r, g), b);
-            let rgb_min = Math.min(Math.min(r, g), b);
-
-            light = (rgb_max + rgb_min) / 5.12;
-            val = rgb_max / 2.56;
-
-            if (val == 0) { // It's black, there's no way to tell hue and sat // val == 0 || rgb_max == 0
-                hue = -1;
-                sat = -1;
-            }
-
-            if (hue != -1 && sat != -1) {
-                r = r / rgb_max;
-                g = g / rgb_max;
-                b = b / rgb_max;
-
-                rgb_max = Math.max(Math.max(r, g), b);
-                rgb_min = Math.min(Math.min(r, g), b);
-
-                sat = (rgb_max - rgb_min) * 100;
-
-                if (sat == 0) {
-                    hue = -1;
-                }
-
-                if (hue != -1) { // It's white, there's no way to tell hue
-                    r = (r - rgb_min) / (rgb_max - rgb_min);
-                    g = (g - rgb_min) / (rgb_max - rgb_min);
-                    b = (b - rgb_min) / (rgb_max - rgb_min);
-
-                    rgb_max = Math.max(Math.max(r, g), b);
-                    rgb_min = Math.min(Math.min(r, g), b);
-
-                    if (rgb_max == r) {
-                        hue = 0 + 60 * (g - b);
-                        if (hue < 0) hue += 360;
-                    } else if (rgb_max == g) {
-                        hue = 120 + 60 * (b - r);
-                    } else {
-                        hue = 240 + 60 * (r - g);
-                    }
-                }
-            }
-            return [Math.round(hue), Math.round(sat), Math.round(val), Math.round(light)];
         }
 
         /**
