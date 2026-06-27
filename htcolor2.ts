@@ -361,6 +361,14 @@ namespace sensors {
             return [rgbw, hsvl];
         }
 
+        getActiveNormRGBHSVL(): number[][] {
+            this.setMode(HTCS2SoftMode.ActiveNormRgb);
+            this.poke();
+            const rgb = this._query();
+            const hsvl = this._rgbToHsvl(rgb);
+            return [rgb, hsvl];
+        }
+
         /**
          * Set the sensor to the selected frequency to HiTechnic Color Sensor v2. The Sensor is configured by default for locations with 60Hz electrical supplies.
          * @param sensor the ht color sensor v2 port
