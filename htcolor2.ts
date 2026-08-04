@@ -39,7 +39,7 @@ namespace sensors {
     * NOTE: The Color Sensor V2 must be configured to match the mains electricity frequency for your country details on how to configure the Color Sensor V2 can be found in the configuration tab on this page.
     */
     //% fixedInstances
-    export class HiTechnicColorSensor2 extends sensors.internal.I2cSensor {
+    export class HiTechnicColorSensor2 extends internal.I2cSensor {
 
         readByts: number = 9; // How many bytes to read
 
