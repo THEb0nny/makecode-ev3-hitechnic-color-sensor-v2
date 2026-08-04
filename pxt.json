@@ -25,7 +25,7 @@
     ],
     "public": true,
     "targetVersions": {
-        "target": "1.5.9-19-gc2173a0",
+        "target": "1.5.9-46-gb4781d9",
         "targetId": "ev3"
     },
     "supportedTargets": [

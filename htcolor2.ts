@@ -39,7 +39,7 @@ namespace sensors {
     * NOTE: The Color Sensor V2 must be configured to match the mains electricity frequency for your country details on how to configure the Color Sensor V2 can be found in the configuration tab on this page.
     */
     //% fixedInstances
-    export class HiTechnicColorSensor2 extends sensors.internal.IICSensor {
+    export class HiTechnicColorSensor2 extends sensors.internal.I2cSensor {
 
         readByts: number = 9; // How many bytes to read
 
@@ -60,8 +60,8 @@ namespace sensors {
             let v = m | 0;
             this.mode = v;
             if (!this.isActive()) return;
-            if (this.realmode != this.mode) {
-                this.realmode = v;
+            if (this.realMode != this.mode) {
+                this.realMode = v;
                 if (m == HTCS2SoftMode.ActiveAll || 
                     m == HTCS2SoftMode.ActiveColor || 
                     m == HTCS2SoftMode.ActiveRgbw || 
