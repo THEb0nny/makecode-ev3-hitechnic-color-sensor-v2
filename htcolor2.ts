@@ -1,10 +1,10 @@
-const enum HTCS2Mode {
+const enum HTColorSensor2Mode {
     Active = 0, // Standard mode with backlight on
     PassiveRaw = 1, // Disable ambient light cancellation
     ActiveRaw = 3 // Raw data from the ambient light sensor with the backlight on
 }
 
-const enum HTCS2SoftMode {
+const enum HTColorSensor2SoftMode {
     ActiveAll = 0,
     ActiveColor = 1,
     ActiveRgbw = 2,
@@ -14,7 +14,7 @@ const enum HTCS2SoftMode {
     ActiveRawRgbw = 6
 }
 
-const enum HTCS2FreqMode {
+const enum HTColorSensor2FreqMode {
     //% block="50"
     Freq50 = 53, // Set sensor to 50Hz cancellation mode // 0x35
     //% block="60"
@@ -34,6 +34,9 @@ namespace sensors {
     const READ_REGISTER = 66; // 0x42
     const MODE_SWITCH_DELAY = 100;
 
+    const ACTIVE_READ_LENGTH = 9;
+    const RAW_READ_LENGTH = 8;
+
     /**
     * The new and totally redesigned HiTechnic Color Sensor V2 operates by using a single white LED to illuminate the target and analyses the color components of the light reflected by the target's surface and calculates a Color Number that is returned.
     * NOTE: The Color Sensor V2 must be configured to match the mains electricity frequency for your country details on how to configure the Color Sensor V2 can be found in the configuration tab on this page.
@@ -41,79 +44,75 @@ namespace sensors {
     //% fixedInstances
     export class HiTechnicColorSensor2 extends internal.I2cSensor {
 
-        readByts: number = 9; // How many bytes to read
+        _readBytes: number = 9; // How many bytes to read
 
         constructor(port: number) {
             super(port);
-            this.setMode(HTCS2SoftMode.ActiveAll);
+            this.setMode(HTColorSensor2SoftMode.ActiveAll);
         }
 
         _deviceType() {
             return DAL.DEVICE_TYPE_NXT_IIC;
         }
         
-        setMode(m: HTCS2SoftMode) {
+        setMode(m: HTColorSensor2SoftMode) {
+            // Override I2cSensor mode switching because this sensor uses I2C commands instead of EV3 UART/I2C modes
             let v = m | 0;
             this.mode = v;
             if (!this.isActive()) return;
             if (this.realMode != this.mode) {
                 this.realMode = v;
-                if (m == HTCS2SoftMode.ActiveAll ||
-                    m == HTCS2SoftMode.ActiveColor ||
-                    m == HTCS2SoftMode.ActiveRgbw ||
-                    m == HTCS2SoftMode.ActiveColorIdxNum ||
-                    m == HTCS2SoftMode.ActiveNormRgb) {
-                    this.transaction(1, [SEND_REGISTER, HTCS2Mode.Active], 0);
-                    this.readByts = 9;
-                } else if (m == HTCS2SoftMode.PassiveRawRgbw) {
-                    this.transaction(1, [SEND_REGISTER, HTCS2Mode.PassiveRaw], 0);
-                    this.readByts = 8;
-                } else if (m == HTCS2SoftMode.ActiveRawRgbw) {
-                    this.transaction(1, [SEND_REGISTER, HTCS2Mode.ActiveRaw], 0);
-                    this.readByts = 8;
+                if (m == HTColorSensor2SoftMode.ActiveAll ||
+                    m == HTColorSensor2SoftMode.ActiveColor ||
+                    m == HTColorSensor2SoftMode.ActiveRgbw ||
+                    m == HTColorSensor2SoftMode.ActiveColorIdxNum ||
+                    m == HTColorSensor2SoftMode.ActiveNormRgb) {
+                    this.transaction(1, [SEND_REGISTER, HTColorSensor2Mode.Active], 0);
+                    this._readBytes = ACTIVE_READ_LENGTH;
+                } else if (m == HTColorSensor2SoftMode.PassiveRawRgbw) {
+                    this.transaction(1, [SEND_REGISTER, HTColorSensor2Mode.PassiveRaw], 0);
+                    this._readBytes = RAW_READ_LENGTH;
+                } else if (m == HTColorSensor2SoftMode.ActiveRawRgbw) {
+                    this.transaction(1, [SEND_REGISTER, HTColorSensor2Mode.ActiveRaw], 0);
+                    this._readBytes = RAW_READ_LENGTH;
                 }
                 pause(MODE_SWITCH_DELAY);
             }
         }
 
         _query() {
-            this.transaction(1, [READ_REGISTER], this.readByts);
-            if (this.mode == HTCS2SoftMode.ActiveAll) {
-                return [this.getBytes()[0], this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4], this.getBytes()[5], this.getBytes()[6], this.getBytes()[7], this.getBytes()[8]];
-            } else if (this.mode == HTCS2SoftMode.ActiveColor) {
-                return [this.getBytes()[0]];
-            } else if (this.mode == HTCS2SoftMode.ActiveRgbw) {
-                return [this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4]];
-            } else if (this.mode == HTCS2SoftMode.ActiveColorIdxNum) {
-                return [this.getBytes()[5]];
-            } else if (this.mode == HTCS2SoftMode.ActiveNormRgb) {
-                return [this.getBytes()[6], this.getBytes()[7], this.getBytes()[8]];
-            } else if (this.mode == HTCS2SoftMode.PassiveRawRgbw || this.mode == HTCS2SoftMode.ActiveRawRgbw) {
-                return [this.getBytes()[0], this.getBytes()[1], this.getBytes()[2], this.getBytes()[3], this.getBytes()[4], this.getBytes()[5], this.getBytes()[6], this.getBytes()[7]];
+            this.transaction(1, [READ_REGISTER], this._readBytes);
+            const bytes = this.getBytes();
+            if (this.mode == HTColorSensor2SoftMode.ActiveAll) {
+                // return [bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7], bytes[8]];
+                return bytes.toArray(NumberFormat.UInt8LE); // Return all 9 bytes
+            } else if (this.mode == HTColorSensor2SoftMode.ActiveColor) {
+                return [bytes[0]];
+            } else if (this.mode == HTColorSensor2SoftMode.ActiveRgbw) {
+                // return [bytes[1], bytes[2], bytes[3], bytes[4]];
+                return bytes.slice(1, 4).toArray(NumberFormat.UInt8LE);
+            } else if (this.mode == HTColorSensor2SoftMode.ActiveColorIdxNum) {
+                return [bytes[5]];
+            } else if (this.mode == HTColorSensor2SoftMode.ActiveNormRgb) {
+                // return [bytes[6], bytes[7], bytes[8]];
+                return bytes.slice(6, 3).toArray(NumberFormat.UInt8LE);
+            } else if (this.mode == HTColorSensor2SoftMode.PassiveRawRgbw || this.mode == HTColorSensor2SoftMode.ActiveRawRgbw) {
+                return [
+                    bytes[0] * 256 + bytes[1],
+                    bytes[2] * 256 + bytes[3],
+                    bytes[4] * 256 + bytes[5],
+                    bytes[6] * 256 + bytes[7]
+                ];
             }
             return [0];
         }
 
         _info() {
-            if (this.mode == HTCS2SoftMode.ActiveColor) {
+            if (this.mode == HTColorSensor2SoftMode.ActiveColor ||
+                this.mode == HTColorSensor2SoftMode.ActiveColorIdxNum) {
                 return [this._query()[0].toString()];
-            } else if (this.mode == HTCS2SoftMode.ActiveAll || 
-                this.mode == HTCS2SoftMode.ActiveRgbw || 
-                this.mode == HTCS2SoftMode.ActiveColorIdxNum || 
-                this.mode == HTCS2SoftMode.ActiveNormRgb) {
-                return this._query().map(number => number.toString());
-            } else if(this.mode == HTCS2SoftMode.PassiveRawRgbw || 
-                this.mode == HTCS2SoftMode.ActiveRawRgbw) {
-                // ToDo
-                this.poke();
-                const bytes = this.getBytes();
-                const r = bytes[0] * 256 + bytes[1];
-                const g = bytes[2] * 256 + bytes[3];
-                const b = bytes[4] * 256 + bytes[5];
-                const w = bytes[6] * 256 + bytes[7];
-                return [r.toString(), g.toString(), b.toString(), w.toString()];
             }
-            return ["0"];
+            return this._query().map(number => number.toString());
         }
 
         // Приватный метод для вычисления HSVL из RGB значений датчика
@@ -185,7 +184,7 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% blockHidden=true
         getMode() {
-            return <HTCS2SoftMode>this.mode;
+            return <HTColorSensor2SoftMode>this.mode;
         }
 
         /**
@@ -203,7 +202,7 @@ namespace sensors {
         //% weight=98 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
-        setHz(freq: HTCS2FreqMode) {
+        setHz(freq: HTColorSensor2FreqMode) {
             // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
             this.transaction(1, [SEND_REGISTER, freq], 0);
             pause(MODE_SWITCH_DELAY);
@@ -224,7 +223,7 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveAll(): number[] {
-            this.setMode(HTCS2SoftMode.ActiveAll);
+            this.setMode(HTColorSensor2SoftMode.ActiveAll);
             this.poke();
             return this._query();
         }
@@ -244,7 +243,7 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveColor(): number {
-            this.setMode(HTCS2SoftMode.ActiveColor);
+            this.setMode(HTColorSensor2SoftMode.ActiveColor);
             this.poke();
             return this._query()[0];
         }
@@ -264,7 +263,7 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveRGBW(): number[] {
-            this.setMode(HTCS2SoftMode.ActiveRgbw);
+            this.setMode(HTColorSensor2SoftMode.ActiveRgbw);
             this.poke();
             return this._query();
         }
@@ -286,9 +285,9 @@ namespace sensors {
         //% group="Color Sensor V2"
         getColorIndex(): number {
             // https://share.google/aimode/BgJq5fdf9TAafeNWg
-            this.setMode(HTCS2SoftMode.ActiveAll);
+            this.setMode(HTColorSensor2SoftMode.ActiveColorIdxNum);
             this.poke();
-            return this._query()[5];
+            return this._query()[0];
         }
 
         /**
@@ -306,7 +305,7 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveNormRGB(): number[] {
-            this.setMode(HTCS2SoftMode.ActiveNormRgb);
+            this.setMode(HTColorSensor2SoftMode.ActiveNormRgb);
             this.poke();
             return this._query();
         }
@@ -328,7 +327,7 @@ namespace sensors {
         getActiveHSVL(): number[] {
             // https://github.com/botbench/robotcdriversuite/blob/master/include/common-light.h
             // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
-            this.setMode(HTCS2SoftMode.ActiveRgbw);
+            this.setMode(HTColorSensor2SoftMode.ActiveRgbw);
             this.poke();
             const rgbw = this._query();
             return this._rgbToHsvl(rgbw);
@@ -348,7 +347,7 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveRGBWHSVL(): number[][] {
-            this.setMode(HTCS2SoftMode.ActiveRgbw);
+            this.setMode(HTColorSensor2SoftMode.ActiveRgbw);
             this.poke();
             const rgbw = this._query();
             const hsvl = this._rgbToHsvl(rgbw);
@@ -368,7 +367,7 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveNormRGBHSVL(): number[][] {
-            this.setMode(HTCS2SoftMode.ActiveNormRgb);
+            this.setMode(HTColorSensor2SoftMode.ActiveNormRgb);
             this.poke();
             const rgb = this._query();
             const hsvl = this._rgbToHsvl(rgb);
@@ -390,13 +389,9 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getPassiveRawRGBW(): number[] {
-            this.setMode(HTCS2SoftMode.PassiveRawRgbw);
+            this.setMode(HTColorSensor2SoftMode.PassiveRawRgbw);
             this.poke();
-            const r = this.getBytes()[0] * 256 + this.getBytes()[1];
-            const g = this.getBytes()[2] * 256 + this.getBytes()[3];
-            const b = this.getBytes()[4] * 256 + this.getBytes()[5];
-            const w = this.getBytes()[6] * 256 + this.getBytes()[7];
-            return [r, g, b, w];
+            return this._query();
         }
 
         /**
@@ -414,13 +409,9 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveRawRGBW(): number[] {
-            this.setMode(HTCS2SoftMode.ActiveRawRgbw);
+            this.setMode(HTColorSensor2SoftMode.ActiveRawRgbw);
             this.poke();
-            const r = this.getBytes()[0] * 256 + this.getBytes()[1];
-            const g = this.getBytes()[2] * 256 + this.getBytes()[3];
-            const b = this.getBytes()[4] * 256 + this.getBytes()[5];
-            const w = this.getBytes()[6] * 256 + this.getBytes()[7];
-            return [r, g, b, w];
+            return this._query();
         }
 
         /**
@@ -436,7 +427,7 @@ namespace sensors {
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveRawRGBWHSVL(): number[][] {
-            this.setMode(HTCS2SoftMode.ActiveRawRgbw);
+            this.setMode(HTColorSensor2SoftMode.ActiveRawRgbw);
             this.poke();
             const rgbw = this._query();
             const hsvl = this._rgbToHsvl(rgbw);
