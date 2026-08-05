@@ -53,19 +53,15 @@ namespace sensors {
         }
         
         setMode(m: HTCS2SoftMode) {
-            this._setMode(m);
-        }
-
-        _setMode(m: number) {
             let v = m | 0;
             this.mode = v;
             if (!this.isActive()) return;
             if (this.realMode != this.mode) {
                 this.realMode = v;
-                if (m == HTCS2SoftMode.ActiveAll || 
-                    m == HTCS2SoftMode.ActiveColor || 
-                    m == HTCS2SoftMode.ActiveRgbw || 
-                    m == HTCS2SoftMode.ActiveColorIdxNum || 
+                if (m == HTCS2SoftMode.ActiveAll ||
+                    m == HTCS2SoftMode.ActiveColor ||
+                    m == HTCS2SoftMode.ActiveRgbw ||
+                    m == HTCS2SoftMode.ActiveColorIdxNum ||
                     m == HTCS2SoftMode.ActiveNormRgb) {
                     this.transaction(1, [SEND_REGISTER, HTCS2Mode.Active], 0);
                     this.readByts = 9;
@@ -120,9 +116,7 @@ namespace sensors {
             return ["0"];
         }
 
-        /**
-         * Приватный метод для вычисления HSVL из RGB значений датчика
-         */
+        // Приватный метод для вычисления HSVL из RGB значений датчика
         private _rgbToHsvl(rgb: number[]): number[] {
             let r = rgb[0], g = rgb[1], b = rgb[2];
 
