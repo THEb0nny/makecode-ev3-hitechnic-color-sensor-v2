@@ -32,5 +32,6 @@
         "ev3"
     ],
     "preferredEditor": "tsprj",
-    "icon": "icon.png"
+    "icon": "icon.png",
+    "weight": 59
 }
