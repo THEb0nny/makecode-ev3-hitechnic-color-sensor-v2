@@ -22,20 +22,21 @@ const enum HTColorSensor2FreqMode {
 }
 
 namespace sensors {
-
+    
     // https://web.archive.org/web/20240316155720/https://modernroboticsinc.com/product/hitechnic-nxt-color-sensor-v2/
     // https://web.archive.org/web/20170413234343/http://botbench.com/driversuite/hitechnic-colour-v2_8h_source.html
     // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
     // https://github.com/salavater/Clev3r-HTColor
     // https://www.youtube.com/watch?v=-QG2p6HcAT0
     // https://picaxe.com/circuit-creator/sensors/lego-nxt-rgb-color-sensor-v2/
+    // https://github.com/botbench/robotcdriversuite/blob/master/include/hitechnic-colour-v2.h
 
-    const SEND_REGISTER = 65; // 0x41
-    const READ_REGISTER = 66; // 0x42
-    const MODE_SWITCH_DELAY = 100;
+    const sendRegister = 65; // 0x41
+    const readRegister = 66; // 0x42
+    const modeSwitchDelay = 100;
 
-    const ACTIVE_READ_LENGTH = 9;
-    const RAW_READ_LENGTH = 8;
+    const activeReadLength = 9;
+    const rawReadLength = 8;
 
     /**
     * The new and totally redesigned HiTechnic Color Sensor V2 operates by using a single white LED to illuminate the target and analyses the color components of the light reflected by the target's surface and calculates a Color Number that is returned.
@@ -67,21 +68,21 @@ namespace sensors {
                     m == HTColorSensor2SoftMode.ActiveRgbw ||
                     m == HTColorSensor2SoftMode.ActiveColorIdxNum ||
                     m == HTColorSensor2SoftMode.ActiveNormRgb) {
-                    this.transaction(1, [SEND_REGISTER, HTColorSensor2Mode.Active], 0);
-                    this._readBytes = ACTIVE_READ_LENGTH;
+                    this.transaction(1, [sendRegister, HTColorSensor2Mode.Active], 0);
+                    this._readBytes = activeReadLength;
                 } else if (m == HTColorSensor2SoftMode.PassiveRawRgbw) {
-                    this.transaction(1, [SEND_REGISTER, HTColorSensor2Mode.PassiveRaw], 0);
-                    this._readBytes = RAW_READ_LENGTH;
+                    this.transaction(1, [sendRegister, HTColorSensor2Mode.PassiveRaw], 0);
+                    this._readBytes = rawReadLength;
                 } else if (m == HTColorSensor2SoftMode.ActiveRawRgbw) {
-                    this.transaction(1, [SEND_REGISTER, HTColorSensor2Mode.ActiveRaw], 0);
-                    this._readBytes = RAW_READ_LENGTH;
+                    this.transaction(1, [sendRegister, HTColorSensor2Mode.ActiveRaw], 0);
+                    this._readBytes = rawReadLength;
                 }
-                pause(MODE_SWITCH_DELAY);
+                pause(modeSwitchDelay);
             }
         }
 
         _query() {
-            this.transaction(1, [READ_REGISTER], this._readBytes);
+            this.transaction(1, [readRegister], this._readBytes);
             const bytes = this.getBytes();
             if (this.mode == HTColorSensor2SoftMode.ActiveAll) {
                 // return [bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7], bytes[8]];
@@ -204,8 +205,8 @@ namespace sensors {
         //% group="Color Sensor V2"
         setHz(freq: HTColorSensor2FreqMode) {
             // https://github.com/ofdl-robotics-tw/EV3-CLEV3R-Modules/blob/main/Mods/HTColorV2.bpm
-            this.transaction(1, [SEND_REGISTER, freq], 0);
-            pause(MODE_SWITCH_DELAY);
+            this.transaction(1, [sendRegister, freq], 0);
+            pause(modeSwitchDelay);
         }
 
         /**
