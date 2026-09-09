@@ -180,7 +180,9 @@ namespace sensors {
         //% blockId=HTCS2GetMode
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=99
         //% subcategory="HiTechnic"
         //% blockHidden=true
@@ -199,7 +201,9 @@ namespace sensors {
         //% blockId=HTCS2SetHz
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=98 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -219,7 +223,9 @@ namespace sensors {
         //% blockId=HTCS2GetActiveAll
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=89 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -239,7 +245,9 @@ namespace sensors {
         //% blockId=HTCS2GetActiveColor
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=88 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -259,7 +267,9 @@ namespace sensors {
         //% blockId=HTCS2GetActiveRGBW
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=87 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -280,7 +290,9 @@ namespace sensors {
         //% blockId=HTCS2GetColorIndex
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=86 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -301,7 +313,9 @@ namespace sensors {
         //% blockId=HTCS2GetActiveNormRGB
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=85 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -321,7 +335,9 @@ namespace sensors {
         //% blockId=HTCS2GetActiveHSVL
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=84
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -343,7 +359,9 @@ namespace sensors {
         //% blockId=HTCS2GetActiveRGBWHSVL
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=83 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -363,7 +381,9 @@ namespace sensors {
         //% blockId=HTCS2GetActiveNormRGBHSVL
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=82 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -385,7 +405,9 @@ namespace sensors {
         //% blockId=HTCS2GetPassiveRawRGBW
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=79 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -405,7 +427,9 @@ namespace sensors {
         //% blockId=HTCS2GetActiveRawRGBW
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=69
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -423,7 +447,9 @@ namespace sensors {
         //% blockId=HTCS2GetActiveRawRGBWHSVL
         //% parts="htcolorsensor2"
         //% blockNamespace=sensors
-        //% this.fieldEditor="ports"
+        //% this.fieldEditor="images"
+        //% this.fieldOptions.columns="4"
+        //% this.fieldOptions.width="300"
         //% weight=68 blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
@@ -441,14 +467,14 @@ namespace sensors {
     }
 
     //% whenUsed block="1" weight=95 fixedInstance jres=icons.port1
-    export const htColor1 = new HiTechnicColorSensor2(1);
+    export const htColor1: HiTechnicColorSensor2 = new HiTechnicColorSensor2(1);
 
     //% whenUsed block="2" weight=90 fixedInstance jres=icons.port2
-    export const htColor2 = new HiTechnicColorSensor2(2);
+    export const htColor2: HiTechnicColorSensor2 = new HiTechnicColorSensor2(2);
 
     //% whenUsed block="3" weight=90 fixedInstance jres=icons.port3
-    export const htColor3 = new HiTechnicColorSensor2(3);
+    export const htColor3: HiTechnicColorSensor2 = new HiTechnicColorSensor2(3);
     
     //% whenUsed block="4" weight=90 fixedInstance jres=icons.port4
-    export const htColor4 = new HiTechnicColorSensor2(4);
+    export const htColor4: HiTechnicColorSensor2 = new HiTechnicColorSensor2(4);
 }
