@@ -204,7 +204,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=98 blockGap=12
+        //% weight=98
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         setHz(freq: HTColorSensor2FreqMode) {
@@ -226,7 +227,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=89 blockGap=12
+        //% weight=89
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveAll(): number[] {
@@ -248,7 +250,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=88 blockGap=12
+        //% weight=88
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveColor(): number {
@@ -270,7 +273,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=87 blockGap=12
+        //% weight=87
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveRGBW(): number[] {
@@ -293,7 +297,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=86 blockGap=12
+        //% weight=86
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getColorIndex(): number {
@@ -316,7 +321,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=85 blockGap=12
+        //% weight=85
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveNormRGB(): number[] {
@@ -362,7 +368,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=83 blockGap=12
+        //% weight=83
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveRGBWHSVL(): number[][] {
@@ -384,7 +391,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=82 blockGap=12
+        //% weight=82
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveNormRGBHSVL(): number[][] {
@@ -408,7 +416,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=79 blockGap=12
+        //% weight=79
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getPassiveRawRGBW(): number[] {
@@ -450,7 +459,8 @@ namespace sensors {
         //% this.fieldEditor="images"
         //% this.fieldOptions.columns="4"
         //% this.fieldOptions.width="300"
-        //% weight=68 blockGap=12
+        //% weight=68
+        //% blockGap=12
         //% subcategory="HiTechnic"
         //% group="Color Sensor V2"
         getActiveRawRGBWHSVL(): number[][] {
